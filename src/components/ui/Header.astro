@@ -1,0 +1,162 @@
+---
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/nosotras', label: 'Nosotras' },
+  { href: '/experiencias', label: 'Experiencias' },
+  { href: '/galeria', label: 'Galería' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contacto', label: 'Contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  style="background: transparent;"
+>
+  <div class="container-girlas">
+    <nav class="flex items-center justify-between h-20" aria-label="Navegación principal">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group" aria-label="Girlas — Inicio">
+        <span
+          class="font-display text-2xl font-bold tracking-tight text-white drop-shadow-sm transition-opacity group-hover:opacity-80"
+        >
+          Girlas
+        </span>
+        <span class="text-xs text-white/70 font-body tracking-widest uppercase hidden sm:block">
+          viajes & experiencias
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="hidden lg:flex items-center gap-8" role="list">
+        {navLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                'link-underline font-body text-sm font-medium tracking-wide transition-colors',
+                currentPath === href
+                  ? 'text-white font-semibold'
+                  : 'text-white/80 hover:text-white',
+              ]}
+              aria-current={currentPath === href ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- CTA Button + Hamburger -->
+      <div class="flex items-center gap-4">
+        <a
+          href="/contacto"
+          class="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[var(--color-coral)] text-sm font-semibold transition-all hover:bg-[var(--color-cream-dark)] hover:shadow-md active:scale-95"
+        >
+          Reservar experiencia
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+          id="menu-toggle"
+          class="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg text-white"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="block w-6 h-0.5 bg-current transition-all duration-300" id="line1"></span>
+          <span class="block w-6 h-0.5 bg-current transition-all duration-300" id="line2"></span>
+          <span class="block w-4 h-0.5 bg-current transition-all duration-300" id="line3"></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden hidden absolute top-full left-0 right-0 glass border-t border-white/20 shadow-lg"
+    aria-hidden="true"
+  >
+    <div class="container-girlas py-6">
+      <ul class="flex flex-col gap-4" role="list">
+        {navLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                'block py-2 font-body text-base font-medium transition-colors',
+                currentPath === href
+                  ? 'text-[var(--color-coral)] font-semibold'
+                  : 'text-[var(--color-charcoal)] hover:text-[var(--color-coral)]',
+              ]}
+              aria-current={currentPath === href ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+        <li class="pt-2 border-t border-[var(--color-cream-dark)]">
+          <a
+            href="/contacto"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-coral)] text-white text-sm font-semibold transition-all hover:bg-[var(--color-coral-dark)] active:scale-95"
+          >
+            Reservar experiencia
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('header');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuToggle = document.getElementById('menu-toggle');
+  const line1 = document.getElementById('line1');
+  const line3 = document.getElementById('line3');
+
+  // Scroll: transparent → solid background
+  function updateHeader() {
+    if (!header) return;
+    if (window.scrollY > 60) {
+      header.style.background = 'rgba(250,247,243,0.95)';
+      header.style.backdropFilter = 'blur(12px)';
+      header.style.borderBottom = '1px solid rgba(212,97,74,0.15)';
+      header.querySelectorAll('a:not(.rounded-full)').forEach((el) => {
+        (el as HTMLElement).style.color = 'var(--color-charcoal)';
+      });
+      const logo = header.querySelector('.font-display') as HTMLElement | null;
+      if (logo) logo.style.color = 'var(--color-coral)';
+    } else {
+      header.style.background = 'transparent';
+      header.style.backdropFilter = 'none';
+      header.style.borderBottom = 'none';
+      header.querySelectorAll('a:not(.rounded-full)').forEach((el) => {
+        (el as HTMLElement).style.color = '';
+      });
+      const logo = header.querySelector('.font-display') as HTMLElement | null;
+      if (logo) logo.style.color = '';
+    }
+  }
+
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+
+  // Mobile menu toggle
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.contains('hidden') === false;
+    mobileMenu?.classList.toggle('hidden');
+    mobileMenu?.setAttribute('aria-hidden', String(isOpen));
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    if (line1 && line3) {
+      line1.style.transform = isOpen ? '' : 'rotate(45deg) translate(3px, 5px)';
+      line3.style.transform = isOpen ? '' : 'rotate(-45deg) translate(3px, -5px)';
+      line3.style.width = isOpen ? '1rem' : '1.5rem';
+    }
+  });
+</script>

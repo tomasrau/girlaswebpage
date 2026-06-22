@@ -1,0 +1,236 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const contactMethods = [
+  {
+    icon: 'whatsapp',
+    label: 'WhatsApp',
+    value: '+54 911 0000-0000',
+    href: 'https://wa.me/5491100000000',
+    description: 'Respondemos en menos de 2 horas',
+  },
+  {
+    icon: 'email',
+    label: 'Email',
+    value: 'hola@girlas.com.ar',
+    href: 'mailto:hola@girlas.com.ar',
+    description: 'Para consultas detalladas',
+  },
+  {
+    icon: 'instagram',
+    label: 'Instagram',
+    value: '@girlas.ar',
+    href: 'https://instagram.com/girlas.ar',
+    description: 'Seguinos para inspiración de viaje',
+  },
+];
+---
+
+<MainLayout
+  title="Contacto"
+  description="Contactate con el equipo de Girlas para reservar tu próxima experiencia de viaje femenino."
+>
+  <!-- Header -->
+  <div class="bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white pt-32 pb-16">
+    <div class="container-girlas">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-px bg-white/50" />
+        <span class="text-white/70 text-sm font-medium tracking-widest uppercase">Hablemos</span>
+      </div>
+      <h1 class="font-display text-5xl lg:text-6xl font-bold text-white mb-4">
+        Contacto
+      </h1>
+      <p class="text-white/80 text-xl max-w-lg">
+        ¿Lista para vivir tu próxima aventura? Escribinos y te ayudamos a elegir la experiencia perfecta.
+      </p>
+    </div>
+  </div>
+
+  <section class="section-padding">
+    <div class="container-girlas">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+        <!-- Contact methods -->
+        <div class="lg:col-span-2">
+          <h2 class="font-display text-3xl font-bold text-[var(--color-charcoal)] mb-8">
+            Cómo contactarnos
+          </h2>
+          <div class="flex flex-col gap-5">
+            {contactMethods.map(({ icon, label, value, href, description }) => (
+              <a
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                class="flex items-center gap-4 p-5 rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] hover:-translate-y-0.5 transition-all group"
+              >
+                <div class="w-12 h-12 rounded-xl bg-[var(--color-coral)]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--color-coral)] transition-colors">
+                  {icon === 'whatsapp' && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition-colors">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                  )}
+                  {icon === 'email' && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition-colors">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                  )}
+                  {icon === 'instagram' && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition-colors">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <div class="text-xs text-[var(--color-charcoal-mid)] uppercase tracking-wide mb-0.5">{label}</div>
+                  <div class="font-semibold text-[var(--color-charcoal)] text-base">{value}</div>
+                  <div class="text-xs text-[var(--color-charcoal-mid)] mt-0.5">{description}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <!-- Response time -->
+          <div class="mt-8 p-5 rounded-[var(--radius-card)] bg-[var(--color-cream-dark)] border border-[var(--color-cream-dark)]">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span class="text-sm font-semibold text-[var(--color-charcoal)]">En línea</span>
+            </div>
+            <p class="text-[var(--color-charcoal-mid)] text-sm">
+              Tiempo de respuesta promedio: <strong class="text-[var(--color-charcoal)]">menos de 2 horas</strong> en días hábiles.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-8 lg:p-10">
+            <h2 class="font-display text-3xl font-bold text-[var(--color-charcoal)] mb-2">
+              Envianos un mensaje
+            </h2>
+            <p class="text-[var(--color-charcoal-mid)] text-sm mb-8">
+              Contanos qué experiencia te interesa y te contactamos con toda la información.
+            </p>
+
+            <form id="contact-form" class="space-y-5" novalidate>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-[var(--color-charcoal)] mb-1.5">
+                    Nombre <span class="text-[var(--color-coral)]">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Tu nombre"
+                    class="w-full px-4 py-3 rounded-xl border border-[var(--color-cream-dark)] bg-[var(--color-cream)] text-[var(--color-charcoal)] placeholder:text-[var(--color-charcoal-mid)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-coral)]/30 focus:border-[var(--color-coral)]/50 transition-all"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-[var(--color-charcoal)] mb-1.5">
+                    Email <span class="text-[var(--color-coral)]">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="tu@email.com"
+                    class="w-full px-4 py-3 rounded-xl border border-[var(--color-cream-dark)] bg-[var(--color-cream)] text-[var(--color-charcoal)] placeholder:text-[var(--color-charcoal-mid)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-coral)]/30 focus:border-[var(--color-coral)]/50 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="phone" class="block text-sm font-medium text-[var(--color-charcoal)] mb-1.5">
+                  Teléfono / WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+54 9 11 0000-0000"
+                  class="w-full px-4 py-3 rounded-xl border border-[var(--color-cream-dark)] bg-[var(--color-cream)] text-[var(--color-charcoal)] placeholder:text-[var(--color-charcoal-mid)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-coral)]/30 focus:border-[var(--color-coral)]/50 transition-all"
+                />
+              </div>
+
+              <div>
+                <label for="experience" class="block text-sm font-medium text-[var(--color-charcoal)] mb-1.5">
+                  ¿Qué experiencia te interesa?
+                </label>
+                <select
+                  id="experience"
+                  name="experience"
+                  class="w-full px-4 py-3 rounded-xl border border-[var(--color-cream-dark)] bg-[var(--color-cream)] text-[var(--color-charcoal)] focus:outline-none focus:ring-2 focus:ring-[var(--color-coral)]/30 focus:border-[var(--color-coral)]/50 transition-all appearance-none"
+                >
+                  <option value="">Seleccioná una opción</option>
+                  <option value="patagonia">Patagonia Austral</option>
+                  <option value="mendoza">Retiro en Mendoza</option>
+                  <option value="colombia">Colombia Mágica</option>
+                  <option value="norte">Magia del Norte</option>
+                  <option value="iguazu">Selva & Cataratas</option>
+                  <option value="peru">Perú Místico</option>
+                  <option value="personalizado">Viaje personalizado</option>
+                  <option value="otro">Otro / consulta general</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="message" class="block text-sm font-medium text-[var(--color-charcoal)] mb-1.5">
+                  Mensaje <span class="text-[var(--color-coral)]">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows="4"
+                  placeholder="Contanos qué buscás, fechas de interés, cantidad de personas..."
+                  class="w-full px-4 py-3 rounded-xl border border-[var(--color-cream-dark)] bg-[var(--color-cream)] text-[var(--color-charcoal)] placeholder:text-[var(--color-charcoal-mid)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-coral)]/30 focus:border-[var(--color-coral)]/50 transition-all resize-none"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="submit-btn"
+                class="w-full py-4 rounded-full bg-[var(--color-coral)] text-white font-semibold text-base hover:bg-[var(--color-coral-dark)] transition-all active:scale-[0.98] shadow-md hover:shadow-lg"
+              >
+                Enviar mensaje
+              </button>
+
+              <p id="form-success" class="hidden text-center text-green-600 font-medium py-2">
+                ✓ ¡Mensaje enviado! Te contactamos pronto.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const success = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+    }
+    // TODO: Integrate with Formspree, EmailJS, or custom backend
+    await new Promise((r) => setTimeout(r, 1000));
+    form.reset();
+    if (submitBtn) {
+      submitBtn.textContent = 'Enviar mensaje';
+      submitBtn.disabled = false;
+    }
+    success?.classList.remove('hidden');
+    setTimeout(() => success?.classList.add('hidden'), 5000);
+  });
+</script>

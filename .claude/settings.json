@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "/Users/tomasrau/miniconda3/envs/tommyrauwebpage/bin/playwright-mcp",
+      "args": [],
+      "env": {}
+    },
+    "github": {
+      "command": "/Users/tomasrau/miniconda3/envs/tommyrauwebpage/bin/github-mcp-server",
+      "args": [],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {}
+    }
+  }
+}

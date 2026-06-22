@@ -1,0 +1,141 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import FeaturesSection from '../components/sections/FeaturesSection.astro';
+import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import NewsletterSection from '../components/sections/NewsletterSection.astro';
+import TripCard from '../components/ui/TripCard.astro';
+import { getFeaturedTrips } from '../data/trips';
+
+const featuredTrips = getFeaturedTrips();
+---
+
+<MainLayout title="Girlas" description="Girlas — Viajes y experiencias diseñadas para el mundo femenino. Aventura, conexión y libertad desde Argentina para el mundo.">
+
+  <!-- HERO -->
+  <HeroSection
+    title="El mundo es más lindo cuando viajamos juntas"
+    subtitle="Experiencias de viaje diseñadas desde y para el mundo femenino. Aventura, conexión y libertad en cada destino."
+    ctaPrimary={{ label: 'Explorar experiencias', href: '/experiencias' }}
+    ctaSecondary={{ label: 'Quiénes somos', href: '/nosotras' }}
+    backgroundImage="/images/hero-bg.jpg"
+    height="full"
+  />
+
+  <!-- FEATURES -->
+  <FeaturesSection />
+
+  <!-- FEATURED TRIPS -->
+  <section class="section-padding" aria-labelledby="featured-trips-title">
+    <div class="container-girlas">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-px bg-[var(--color-coral)]" />
+            <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">
+              Próximas salidas
+            </span>
+          </div>
+          <h2 id="featured-trips-title" class="font-display text-4xl lg:text-5xl font-bold text-[var(--color-charcoal)]">
+            Experiencias <em class="text-gradient-coral not-italic">destacadas</em>
+          </h2>
+        </div>
+        <a
+          href="/experiencias"
+          class="inline-flex items-center gap-2 text-[var(--color-coral)] font-semibold text-sm hover:gap-3 transition-all whitespace-nowrap"
+        >
+          Ver todas
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredTrips.map((trip) => (
+          <TripCard
+            title={trip.title}
+            destination={trip.destination}
+            duration={trip.duration}
+            price={trip.price}
+            image={trip.image}
+            tags={trip.tags}
+            href={`/experiencias/${trip.slug}`}
+            featured={trip.featured}
+          />
+        ))}
+        <!-- Third card: CTA to all trips -->
+        <div class="flex flex-col items-center justify-center rounded-[var(--radius-card)] border-2 border-dashed border-[var(--color-coral)]/30 p-10 text-center gap-5 hover:border-[var(--color-coral)]/60 transition-colors group">
+          <div class="w-16 h-16 rounded-full bg-[var(--color-coral)]/10 flex items-center justify-center group-hover:bg-[var(--color-coral)]/20 transition-colors">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-1">6 destinos más</p>
+            <p class="text-[var(--color-charcoal-mid)] text-sm">para vivir con Girlas</p>
+          </div>
+          <a
+            href="/experiencias"
+            class="px-6 py-2.5 rounded-full bg-[var(--color-coral)] text-white text-sm font-semibold hover:bg-[var(--color-coral-dark)] transition-colors"
+          >
+            Ver todas las experiencias
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="section-padding bg-[var(--color-teal)] text-white overflow-hidden relative">
+    <div class="absolute inset-0 opacity-5" aria-hidden="true">
+      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="dots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <circle cx="5" cy="5" r="1.5" fill="white"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dots)"/>
+      </svg>
+    </div>
+    <div class="container-girlas relative">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-px bg-white/50" />
+            <span class="text-white/70 text-sm font-medium tracking-widest uppercase">Nuestra historia</span>
+          </div>
+          <h2 class="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
+            Nacimos para que<br />viajar sea tuyo
+          </h2>
+          <p class="text-white/75 text-lg leading-relaxed mb-6">
+            Girlas nació de la convicción de que las mujeres merecemos espacios de viaje diseñados específicamente para nosotras. Sin concesiones, sin filtros, con toda la libertad.
+          </p>
+          <p class="text-white/75 text-lg leading-relaxed mb-8">
+            Somos un equipo de mujeres viajeras que conocen cada destino en profundidad y que ponen el alma en cada experiencia.
+          </p>
+          <a
+            href="/nosotras"
+            class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[var(--color-teal)] font-semibold hover:bg-white/90 transition-all active:scale-95"
+          >
+            Conocé nuestra historia
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img src="/images/about-1.jpg" alt="Mujeres viajando con Girlas" class="rounded-[var(--radius-card)] w-full aspect-[3/4] object-cover" loading="lazy" />
+          <img src="/images/about-2.jpg" alt="Experiencia Girlas en la naturaleza" class="rounded-[var(--radius-card)] w-full aspect-[3/4] object-cover mt-8" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <TestimonialsSection />
+
+  <!-- NEWSLETTER -->
+  <NewsletterSection variant="coral" />
+
+</MainLayout>

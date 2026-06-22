@@ -1,0 +1,138 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import TripCard from '../../components/ui/TripCard.astro';
+import NewsletterSection from '../../components/sections/NewsletterSection.astro';
+import { trips } from '../../data/trips';
+
+const categories = [
+  { value: 'all', label: 'Todas' },
+  { value: 'aventura', label: 'Aventura' },
+  { value: 'retiro', label: 'Retiros' },
+  { value: 'cultural', label: 'Cultural' },
+  { value: 'internacional', label: 'Internacional' },
+];
+---
+
+<MainLayout
+  title="Experiencias"
+  description="Explorá todos los viajes y experiencias de Girlas: aventura, retiros de bienestar, destinos culturales e internacionales."
+>
+  <!-- Header -->
+  <div class="bg-[var(--color-charcoal)] text-white pt-32 pb-16">
+    <div class="container-girlas">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-px bg-[var(--color-coral)]" />
+        <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Girlas</span>
+      </div>
+      <h1 class="font-display text-5xl lg:text-6xl font-bold text-white mb-4">
+        Nuestras experiencias
+      </h1>
+      <p class="text-white/70 text-xl max-w-xl">
+        Cada viaje es una oportunidad para conectarte con el mundo, con otras mujeres y con vos misma.
+      </p>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="sticky top-20 z-40 bg-[var(--color-cream)]/95 backdrop-blur border-b border-[var(--color-cream-dark)] shadow-sm">
+    <div class="container-girlas">
+      <div class="flex gap-2 py-4 overflow-x-auto scrollbar-none" role="tablist" aria-label="Filtrar por categoría">
+        {categories.map(({ value, label }) => (
+          <button
+            role="tab"
+            data-category={value}
+            class:list={[
+              'filter-btn px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all',
+              value === 'all'
+                ? 'bg-[var(--color-coral)] text-white'
+                : 'bg-white text-[var(--color-charcoal-mid)] hover:text-[var(--color-charcoal)] border border-[var(--color-cream-dark)]',
+            ]}
+            aria-selected={value === 'all' ? 'true' : 'false'}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Trips grid -->
+  <section class="section-padding">
+    <div class="container-girlas">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="trips-grid">
+        {trips.map((trip) => (
+          <div data-category={trip.category} class="trip-item">
+            <TripCard
+              title={trip.title}
+              destination={trip.destination}
+              duration={trip.duration}
+              price={trip.price}
+              image={trip.image}
+              tags={trip.tags}
+              href={`/experiencias/${trip.slug}`}
+              featured={trip.featured}
+            />
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty state -->
+      <div id="no-results" class="hidden py-20 text-center">
+        <p class="font-display text-2xl text-[var(--color-charcoal-mid)] mb-4">No encontramos experiencias en esta categoría</p>
+        <p class="text-[var(--color-charcoal-mid)] text-sm">Probá con otra categoría o <a href="/contacto" class="text-[var(--color-coral)] underline">consultanos por un viaje personalizado</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom trip CTA -->
+  <section class="section-padding bg-[var(--color-cream-dark)]">
+    <div class="container-girlas text-center max-w-2xl mx-auto">
+      <h2 class="font-display text-4xl font-bold text-[var(--color-charcoal)] mb-4">
+        ¿No encontrás lo que buscás?
+      </h2>
+      <p class="text-[var(--color-charcoal-mid)] text-lg mb-8">
+        Diseñamos experiencias a medida para grupos de amigas, cumpleaños, retiros corporativos y más.
+      </p>
+      <a
+        href="/contacto"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[var(--color-coral)] text-white font-semibold hover:bg-[var(--color-coral-dark)] transition-all active:scale-95 shadow-lg"
+      >
+        Consultanos por un viaje personalizado
+      </a>
+    </div>
+  </section>
+
+  <NewsletterSection variant="light" />
+</MainLayout>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.trip-item') as NodeListOf<HTMLElement>;
+  const noResults = document.getElementById('no-results');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+
+      // Update active button styles
+      buttons.forEach((b) => {
+        b.classList.remove('bg-[var(--color-coral)]', 'text-white');
+        b.classList.add('bg-white', 'text-[var(--color-charcoal-mid)]', 'border', 'border-[var(--color-cream-dark)]');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('bg-[var(--color-coral)]', 'text-white');
+      btn.classList.remove('bg-white', 'text-[var(--color-charcoal-mid)]', 'border', 'border-[var(--color-cream-dark)]');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Filter items
+      let visible = 0;
+      items.forEach((item) => {
+        const show = category === 'all' || item.getAttribute('data-category') === category;
+        item.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      noResults?.classList.toggle('hidden', visible > 0);
+    });
+  });
+</script>

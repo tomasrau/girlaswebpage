@@ -1,0 +1,99 @@
+---
+interface Props {
+  variant?: 'light' | 'dark' | 'coral';
+}
+
+const { variant = 'coral' } = Astro.props;
+
+const variants = {
+  light: 'bg-[var(--color-cream-dark)]',
+  dark:  'bg-[var(--color-charcoal)] text-white',
+  coral: 'bg-gradient-to-br from-[var(--color-coral)] via-[var(--color-coral)] to-[var(--color-coral-dark)] text-white',
+};
+---
+
+<section
+  class={`${variants[variant]} section-padding`}
+  aria-labelledby="newsletter-title"
+>
+  <div class="container-girlas">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class={`w-10 h-px ${variant === 'light' ? 'bg-[var(--color-coral)]' : 'bg-white/50'}`} />
+        <span class={`text-sm font-medium tracking-widest uppercase ${variant === 'light' ? 'text-[var(--color-coral)]' : 'text-white/70'}`}>
+          Newsletter
+        </span>
+        <div class={`w-10 h-px ${variant === 'light' ? 'bg-[var(--color-coral)]' : 'bg-white/50'}`} />
+      </div>
+
+      <h2
+        id="newsletter-title"
+        class={`font-display text-4xl lg:text-5xl font-bold mb-4 ${variant === 'light' ? 'text-[var(--color-charcoal)]' : 'text-white'}`}
+      >
+        Sumáte a la comunidad
+      </h2>
+
+      <p class={`text-lg mb-8 leading-relaxed ${variant === 'light' ? 'text-[var(--color-charcoal-mid)]' : 'text-white/80'}`}>
+        Recibí inspiración de viaje, ofertas exclusivas y las últimas novedades de Girlas directo en tu bandeja.
+      </p>
+
+      <!-- Form -->
+      <form
+        id="newsletter-form"
+        class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+        novalidate
+      >
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="Tu email"
+          aria-label="Dirección de email"
+          class:list={[
+            'flex-1 px-5 py-3.5 rounded-full text-[var(--color-charcoal)] placeholder:text-[var(--color-charcoal-mid)]/60 focus:outline-none focus:ring-2 transition-all',
+            variant === 'light'
+              ? 'bg-white border border-[var(--color-cream-dark)] focus:ring-[var(--color-coral)]/30'
+              : 'bg-white/20 text-white placeholder:text-white/60 border border-white/30 focus:ring-white/30 focus:bg-white/30',
+          ]}
+        />
+        <button
+          type="submit"
+          class:list={[
+            'px-7 py-3.5 rounded-full font-semibold text-sm whitespace-nowrap transition-all active:scale-95',
+            variant === 'light'
+              ? 'bg-[var(--color-coral)] text-white hover:bg-[var(--color-coral-dark)] shadow-md'
+              : 'bg-white text-[var(--color-coral)] hover:bg-white/90 shadow-md',
+          ]}
+        >
+          Suscribirme
+        </button>
+      </form>
+
+      <p class={`text-xs mt-4 ${variant === 'light' ? 'text-[var(--color-charcoal-mid)]' : 'text-white/50'}`}>
+        Sin spam. Podés darte de baja cuando quieras.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+    if (!emailInput?.value) return;
+    // TODO: Integrate with email service (MailerLite, Mailchimp, etc.)
+    console.log('Newsletter signup:', emailInput.value);
+    emailInput.value = '';
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = '¡Gracias! ✓';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 3000);
+    }
+  });
+</script>

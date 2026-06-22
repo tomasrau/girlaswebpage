@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────
+   GIRLAS — Design System
+   Empresa de viajes y experiencias femeninas
+   girlas.com.ar
+──────────────────────────────────────────── */
+
+@theme {
+  /* Brand Colors */
+  --color-coral:       #D4614A;
+  --color-coral-light: #E8876F;
+  --color-coral-dark:  #B04A35;
+
+  --color-teal:        #1E6B7A;
+  --color-teal-light:  #2D8FA0;
+  --color-teal-dark:   #154E5A;
+
+  --color-gold:        #C49A3C;
+  --color-gold-light:  #DDB75C;
+  --color-gold-dark:   #9A7828;
+
+  --color-cream:       #FAF7F3;
+  --color-cream-dark:  #F2EBE0;
+
+  --color-charcoal:    #2C1810;
+  --color-charcoal-mid:#5C3D2E;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --spacing-section: 5rem;
+
+  /* Border radius */
+  --radius-card:   1.25rem;
+  --radius-button: 9999px;
+
+  /* Shadows */
+  --shadow-card:  0 4px 24px -4px rgba(44, 24, 16, 0.12);
+  --shadow-hover: 0 12px 40px -8px rgba(44, 24, 16, 0.20);
+}
+
+/* ── Global Base ── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    color: var(--color-charcoal);
+    background-color: var(--color-cream);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+  }
+
+  ::selection {
+    background-color: var(--color-coral);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-coral);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ── Utility Classes ── */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .text-gradient-coral {
+    background: linear-gradient(135deg, var(--color-coral), var(--color-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-teal {
+    background: linear-gradient(135deg, var(--color-teal), var(--color-teal-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .container-girlas {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Glass card effect */
+  .glass {
+    background: rgba(250, 247, 243, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Animated underline */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-coral);
+    transition: width 0.3s ease;
+  }
+  .link-underline:hover::after {
+    width: 100%;
+  }
+}

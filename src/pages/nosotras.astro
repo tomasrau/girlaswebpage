@@ -1,0 +1,157 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import NewsletterSection from '../components/sections/NewsletterSection.astro';
+
+const values = [
+  { title: 'Libertad', description: 'Creemos que viajar es uno de los actos más liberadores. Diseñamos experiencias que te permiten ser completamente vos.' },
+  { title: 'Sororidad', description: 'Los viajes más ricos son los que se comparten. Fomentamos conexiones genuinas entre las mujeres que viajan con nosotras.' },
+  { title: 'Autenticidad', description: 'Nada de destinos turísticos masivos. Buscamos lo auténtico, lo local, lo que te cambia la perspectiva.' },
+  { title: 'Seguridad', description: 'Tu seguridad es nuestra prioridad. Cada destino, alojamiento y actividad es evaluado con criterios de seguridad femenina.' },
+];
+
+const team = [
+  {
+    name: 'Sofía Ramírez',
+    role: 'Fundadora & Directora de Experiencias',
+    bio: 'Viajó por 40 países antes de crear Girlas. Cree que cada viaje tiene el poder de transformar quiénes somos.',
+    image: '/images/team/sofia.jpg',
+  },
+  {
+    name: 'Lucía Fernández',
+    role: 'Coordinadora de Viajes',
+    bio: 'Experta en logística y coordinación. Hace que cada detalle de tus viajes sea impecable.',
+    image: '/images/team/lucia.jpg',
+  },
+  {
+    name: 'Martina Gómez',
+    role: 'Guía & Experta en Bienestar',
+    bio: 'Instructora de yoga certificada e intérprete cultural. Trae profundidad a cada destino que visitamos.',
+    image: '/images/team/martina.jpg',
+  },
+];
+---
+
+<MainLayout
+  title="Nosotras"
+  description="Conocé el equipo detrás de Girlas y la historia de cómo nació la empresa de viajes femeninos más especial de Argentina."
+>
+
+  <!-- Hero de página -->
+  <div class="relative bg-[var(--color-charcoal)] text-white pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-20" style="background-image: url('/images/nosotras-bg.jpg'); background-size: cover; background-position: center;" />
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]" />
+    <div class="container-girlas relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-px bg-[var(--color-coral)]" />
+        <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Quiénes somos</span>
+      </div>
+      <h1 class="font-display text-5xl lg:text-6xl font-bold text-white mb-6 max-w-2xl">
+        Somos Girlas
+      </h1>
+      <p class="text-white/75 text-xl max-w-xl leading-relaxed">
+        Una empresa de viajes fundada por mujeres, para mujeres. Creemos que el mundo es más tuyo cuando lo explorás desde la libertad y la sororidad.
+      </p>
+    </div>
+  </div>
+
+  <!-- Historia -->
+  <section class="section-padding">
+    <div class="container-girlas">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="relative">
+          <img
+            src="/images/about-story.jpg"
+            alt="El equipo de Girlas"
+            class="rounded-[var(--radius-card)] w-full aspect-[4/3] object-cover shadow-[var(--shadow-hover)]"
+            loading="lazy"
+          />
+          <div class="absolute -bottom-6 -right-6 bg-[var(--color-coral)] text-white rounded-[var(--radius-card)] p-6 shadow-lg max-w-[200px]">
+            <div class="font-display text-4xl font-bold">2019</div>
+            <div class="text-sm text-white/80 mt-1">Año en que comenzó la aventura</div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-px bg-[var(--color-coral)]" />
+            <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Nuestra historia</span>
+          </div>
+          <h2 class="font-display text-4xl font-bold text-[var(--color-charcoal)] mb-6">
+            Todo empezó con un viaje que cambió todo
+          </h2>
+          <div class="space-y-4 text-[var(--color-charcoal-mid)] text-base leading-relaxed">
+            <p>
+              En 2019, Sofía volvió de un viaje a Marruecos con algo claro: viajar sola como mujer era posible, maravilloso, y necesitaba un espacio que lo hiciera más accesible para todas.
+            </p>
+            <p>
+              Junto a Lucía y Martina, fundaron Girlas con una propuesta simple pero poderosa: <strong class="text-[var(--color-charcoal)] font-semibold">viajes grupales de mujeres, diseñados desde cero por mujeres que entienden lo que necesitamos</strong>.
+            </p>
+            <p>
+              Hoy, cinco años y más de 500 viajeras después, Girlas es la comunidad de mujeres viajeras más vibrante de Argentina.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="section-padding bg-[var(--color-cream-dark)]" aria-labelledby="values-title">
+    <div class="container-girlas">
+      <div class="text-center mb-14">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-px bg-[var(--color-coral)]" />
+          <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Qué nos guía</span>
+          <div class="w-10 h-px bg-[var(--color-coral)]" />
+        </div>
+        <h2 id="values-title" class="font-display text-4xl font-bold text-[var(--color-charcoal)]">
+          Nuestros valores
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map(({ title, description }) => (
+          <div class="p-6 bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)]">
+            <div class="w-10 h-1 rounded-full bg-[var(--color-coral)] mb-4" />
+            <h3 class="font-display text-2xl font-bold text-[var(--color-charcoal)] mb-3">{title}</h3>
+            <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed">{description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Equipo -->
+  <section class="section-padding" aria-labelledby="team-title">
+    <div class="container-girlas">
+      <div class="text-center mb-14">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-px bg-[var(--color-coral)]" />
+          <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">El equipo</span>
+          <div class="w-10 h-px bg-[var(--color-coral)]" />
+        </div>
+        <h2 id="team-title" class="font-display text-4xl font-bold text-[var(--color-charcoal)]">
+          Las chicas detrás de Girlas
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {team.map(({ name, role, bio, image }) => (
+          <div class="text-center group">
+            <div class="relative inline-block mb-5">
+              <img
+                src={image}
+                alt={`Foto de ${name}`}
+                class="w-40 h-40 rounded-full object-cover mx-auto shadow-[var(--shadow-card)] ring-4 ring-[var(--color-cream-dark)] group-hover:ring-[var(--color-coral)]/30 transition-all"
+                loading="lazy"
+              />
+            </div>
+            <h3 class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-1">{name}</h3>
+            <p class="text-[var(--color-coral)] text-sm font-medium mb-3">{role}</p>
+            <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed max-w-xs mx-auto">{bio}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <NewsletterSection variant="dark" />
+
+</MainLayout>

@@ -1,0 +1,82 @@
+---
+interface Props {
+  name: string;
+  location: string;
+  text: string;
+  avatar?: string;
+  rating?: number;
+  trip?: string;
+}
+
+const {
+  name,
+  location,
+  text,
+  avatar,
+  rating = 5,
+  trip,
+} = Astro.props;
+---
+
+<blockquote class="relative bg-white rounded-[var(--radius-card)] p-7 shadow-[var(--shadow-card)] flex flex-col gap-5">
+  <!-- Quote icon -->
+  <div class="absolute top-6 right-6 text-[var(--color-coral)]/15" aria-hidden="true">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+    </svg>
+  </div>
+
+  <!-- Stars -->
+  <div class="flex gap-1" aria-label={`${rating} de 5 estrellas`}>
+    {Array.from({ length: 5 }, (_, i) => (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill={i < rating ? 'var(--color-gold)' : 'none'}
+        stroke="var(--color-gold)"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    ))}
+  </div>
+
+  <!-- Text -->
+  <p class="text-[var(--color-charcoal-mid)] text-base leading-relaxed italic flex-1">
+    "{text}"
+  </p>
+
+  {trip && (
+    <span class="text-xs text-[var(--color-coral)] font-medium uppercase tracking-wide">
+      Experiencia: {trip}
+    </span>
+  )}
+
+  <!-- Author -->
+  <footer class="flex items-center gap-3 pt-4 border-t border-[var(--color-cream-dark)]">
+    {avatar ? (
+      <img
+        src={avatar}
+        alt={`Foto de ${name}`}
+        class="w-10 h-10 rounded-full object-cover ring-2 ring-[var(--color-cream-dark)]"
+        loading="lazy"
+        width="40"
+        height="40"
+      />
+    ) : (
+      <div
+        class="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] flex items-center justify-center text-white font-display font-bold text-lg"
+        aria-hidden="true"
+      >
+        {name.charAt(0)}
+      </div>
+    )}
+    <div>
+      <cite class="not-italic font-semibold text-[var(--color-charcoal)] text-sm">{name}</cite>
+      <p class="text-[var(--color-charcoal-mid)] text-xs">{location}</p>
+    </div>
+  </footer>
+</blockquote>

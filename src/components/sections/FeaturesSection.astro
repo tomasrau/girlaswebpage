@@ -1,0 +1,79 @@
+---
+const features = [
+  {
+    icon: 'heart',
+    title: 'Solo para mujeres',
+    description: 'Un espacio seguro donde cada viaje está pensado desde la perspectiva femenina, fomentando conexiones auténticas.',
+  },
+  {
+    icon: 'map',
+    title: 'Destinos únicos',
+    description: 'Seleccionamos destinos fuera de lo común: pueblos escondidos, retiros en la naturaleza, ciudades con alma.',
+  },
+  {
+    icon: 'users',
+    title: 'Grupos reducidos',
+    description: 'Máximo 12 personas por experiencia para garantizar una atención personalizada y una dinámica de grupo íntima.',
+  },
+  {
+    icon: 'shield',
+    title: 'Viaje con confianza',
+    description: 'Guías expertas, logística impecable y acompañamiento antes, durante y después de cada experiencia.',
+  },
+];
+
+const icons: Record<string, string> = {
+  heart: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+  map: 'M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4zm7-4v16m8-12v16',
+  users: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm14 14v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+};
+---
+
+<section class="section-padding bg-[var(--color-cream)]" aria-labelledby="features-title">
+  <div class="container-girlas">
+    <!-- Section header -->
+    <div class="text-center mb-16">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="w-10 h-px bg-[var(--color-coral)]" />
+        <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">
+          Por qué elegirnos
+        </span>
+        <div class="w-10 h-px bg-[var(--color-coral)]" />
+      </div>
+      <h2 id="features-title" class="font-display text-4xl lg:text-5xl font-bold text-[var(--color-charcoal)] mb-4">
+        Viajes diseñados<br />
+        <em class="text-gradient-coral not-italic">para vos</em>
+      </h2>
+      <p class="text-[var(--color-charcoal-mid)] text-lg max-w-2xl mx-auto">
+        Cada detalle pensado para que tu experiencia sea transformadora, segura y completamente tuya.
+      </p>
+    </div>
+
+    <!-- Features grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {features.map(({ icon, title, description }) => (
+        <div class="group p-7 rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] hover:-translate-y-1 transition-all duration-300">
+          <!-- Icon -->
+          <div class="w-12 h-12 rounded-xl bg-[var(--color-coral)]/10 flex items-center justify-center mb-5 group-hover:bg-[var(--color-coral)] transition-colors duration-300">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--color-coral)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="group-hover:stroke-white transition-colors duration-300"
+            >
+              <path d={icons[icon]} />
+            </svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-3">{title}</h3>
+          <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed">{description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
