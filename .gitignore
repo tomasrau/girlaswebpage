@@ -20,3 +20,10 @@ Thumbs.db
 # IDE
 .vscode/settings.json
 .idea/
+
+# Claude Code local config (resources, memory, settings — no van al repo)
+.claude/
+
+# Imágenes grandes de trabajo (optimizar antes de commitear)
+public/images/trips/*.jpg
+public/images/trips/*.jpeg

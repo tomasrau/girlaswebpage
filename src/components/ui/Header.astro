@@ -20,15 +20,15 @@ const currentPath = Astro.url.pathname;
     <nav class="flex items-center justify-between h-20" aria-label="Navegación principal">
 
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 group" aria-label="Girlas — Inicio">
-        <span
-          class="font-display text-2xl font-bold tracking-tight text-white drop-shadow-sm transition-opacity group-hover:opacity-80"
-        >
-          Girlas
-        </span>
-        <span class="text-xs text-white/70 font-body tracking-widest uppercase hidden sm:block">
-          viajes & experiencias
-        </span>
+      <a href="/" class="flex items-center group" aria-label="Girlas — Inicio">
+        <img
+          id="logo-img"
+          src="/logos/logo-girlas-full.png"
+          alt="Girlas"
+          class="h-12 w-auto transition-opacity group-hover:opacity-85 drop-shadow-sm"
+          width="160"
+          height="48"
+        />
       </a>
 
       <!-- Desktop Nav -->
@@ -55,7 +55,7 @@ const currentPath = Astro.url.pathname;
       <div class="flex items-center gap-4">
         <a
           href="/contacto"
-          class="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[var(--color-coral)] text-sm font-semibold transition-all hover:bg-[var(--color-cream-dark)] hover:shadow-md active:scale-95"
+          class="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[var(--color-bordo)] text-sm font-semibold transition-all hover:bg-[var(--color-rosa-light)] hover:shadow-md active:scale-95"
         >
           Reservar experiencia
         </a>
@@ -103,7 +103,7 @@ const currentPath = Astro.url.pathname;
         <li class="pt-2 border-t border-[var(--color-cream-dark)]">
           <a
             href="/contacto"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-coral)] text-white text-sm font-semibold transition-all hover:bg-[var(--color-coral-dark)] active:scale-95"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-rosa)] text-[var(--color-bordo)] text-sm font-semibold transition-all hover:bg-[var(--color-rosa-dark)] hover:text-white active:scale-95"
           >
             Reservar experiencia
           </a>
@@ -120,18 +120,19 @@ const currentPath = Astro.url.pathname;
   const line1 = document.getElementById('line1');
   const line3 = document.getElementById('line3');
 
+  const logoImg = document.getElementById('logo-img') as HTMLImageElement | null;
+
   // Scroll: transparent → solid background
   function updateHeader() {
     if (!header) return;
     if (window.scrollY > 60) {
-      header.style.background = 'rgba(250,247,243,0.95)';
+      header.style.background = 'rgba(255, 241, 230, 0.96)';
       header.style.backdropFilter = 'blur(12px)';
-      header.style.borderBottom = '1px solid rgba(212,97,74,0.15)';
+      header.style.borderBottom = '1px solid rgba(247, 168, 200, 0.25)';
       header.querySelectorAll('a:not(.rounded-full)').forEach((el) => {
         (el as HTMLElement).style.color = 'var(--color-charcoal)';
       });
-      const logo = header.querySelector('.font-display') as HTMLElement | null;
-      if (logo) logo.style.color = 'var(--color-coral)';
+      if (logoImg) logoImg.src = '/logos/logo-verde-wordmark.png';
     } else {
       header.style.background = 'transparent';
       header.style.backdropFilter = 'none';
@@ -139,8 +140,7 @@ const currentPath = Astro.url.pathname;
       header.querySelectorAll('a:not(.rounded-full)').forEach((el) => {
         (el as HTMLElement).style.color = '';
       });
-      const logo = header.querySelector('.font-display') as HTMLElement | null;
-      if (logo) logo.style.color = '';
+      if (logoImg) logoImg.src = '/logos/logo-girlas-full.png';
     }
   }
 

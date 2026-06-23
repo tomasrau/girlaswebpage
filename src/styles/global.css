@@ -4,31 +4,47 @@
    GIRLAS — Design System
    Empresa de viajes y experiencias femeninas
    girlas.com.ar
+   Paleta y tipografías: Manual de Marca Girlas 2026
 ──────────────────────────────────────────── */
 
 @theme {
-  /* Brand Colors */
-  --color-coral:       #D4614A;
-  --color-coral-light: #E8876F;
-  --color-coral-dark:  #B04A35;
+  /* Brand Colors — Principales */
+  --color-rosa:        #f7a8c8;
+  --color-rosa-light:  #fee0ec;
+  --color-rosa-dark:   #e07aab;
 
-  --color-teal:        #1E6B7A;
-  --color-teal-light:  #2D8FA0;
-  --color-teal-dark:   #154E5A;
+  --color-mint:        #a9d6cf;
+  --color-mint-light:  #cce9ed;
+  --color-mint-dark:   #07826a;
 
-  --color-gold:        #C49A3C;
-  --color-gold-light:  #DDB75C;
-  --color-gold-dark:   #9A7828;
+  --color-naranja:     #f4af6a;
+  --color-naranja-dark: #e86f06;
 
-  --color-cream:       #FAF7F3;
-  --color-cream-dark:  #F2EBE0;
+  --color-amarillo:    #ffdd93;
+  --color-durazno:     #f7d8bc;
 
-  --color-charcoal:    #2C1810;
-  --color-charcoal-mid:#5C3D2E;
+  /* Brand Colors — Neutros */
+  --color-cream:       #fff1e6;
+  --color-cream-dark:  #f7d8bc;
 
-  /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
+  --color-bordo:       #7c093d;
+  --color-charcoal:    #1a1a1a;
+
+  /* Legacy aliases — usados en componentes existentes */
+  --color-coral:       #f7a8c8;
+  --color-coral-light: #fee0ec;
+  --color-coral-dark:  #e07aab;
+  --color-teal:        #a9d6cf;
+  --color-teal-light:  #cce9ed;
+  --color-teal-dark:   #07826a;
+  --color-gold:        #ffdd93;
+  --color-gold-light:  #f4af6a;
+  --color-gold-dark:   #e86f06;
+  --color-charcoal-mid:#4a2030;
+
+  /* Typography — Manual de Marca */
+  --font-display: 'Ojuju', 'Poppins', system-ui, sans-serif;
+  --font-body:    'Poppins', system-ui, sans-serif;
 
   /* Spacing scale */
   --spacing-section: 5rem;
@@ -38,8 +54,8 @@
   --radius-button: 9999px;
 
   /* Shadows */
-  --shadow-card:  0 4px 24px -4px rgba(44, 24, 16, 0.12);
-  --shadow-hover: 0 12px 40px -8px rgba(44, 24, 16, 0.20);
+  --shadow-card:  0 4px 24px -4px rgba(124, 9, 61, 0.10);
+  --shadow-hover: 0 12px 40px -8px rgba(124, 9, 61, 0.18);
 }
 
 /* ── Global Base ── */
@@ -57,12 +73,12 @@
   }
 
   ::selection {
-    background-color: var(--color-coral);
-    color: white;
+    background-color: var(--color-rosa);
+    color: var(--color-bordo);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-coral);
+    outline: 2px solid var(--color-rosa);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -80,14 +96,14 @@
   }
 
   .text-gradient-coral {
-    background: linear-gradient(135deg, var(--color-coral), var(--color-gold));
+    background: linear-gradient(135deg, var(--color-rosa), var(--color-naranja));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-teal {
-    background: linear-gradient(135deg, var(--color-teal), var(--color-teal-light));
+    background: linear-gradient(135deg, var(--color-mint-dark), var(--color-mint));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -106,7 +122,7 @@
 
   /* Glass card effect */
   .glass {
-    background: rgba(250, 247, 243, 0.85);
+    background: rgba(255, 241, 230, 0.90);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -122,7 +138,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--color-coral);
+    background: var(--color-rosa);
     transition: width 0.3s ease;
   }
   .link-underline:hover::after {

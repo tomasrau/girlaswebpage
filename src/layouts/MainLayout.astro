@@ -49,19 +49,20 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <meta name="twitter:image" content={new URL(image, Astro.site)} />
 
     <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logos/isotipo-rosa.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/logos/isotipo-rosa.png" />
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts — Ojuju (display) + Poppins (body) — Manual de Marca Girlas -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
       rel="stylesheet"
     />
 
     <!-- Theme color -->
-    <meta name="theme-color" content="#D4614A" />
+    <meta name="theme-color" content="#f7a8c8" />
   </head>
   <body>
     <Header />
