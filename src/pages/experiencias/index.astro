@@ -68,9 +68,11 @@ const categories = [
               duration={trip.duration}
               price={trip.price}
               image={trip.image}
+              imagePosition={trip.imagePosition}
               tags={trip.tags}
               href={`/experiencias/${trip.slug}`}
               featured={trip.featured}
+              soldOut={trip.soldOut}
             />
           </div>
         ))}

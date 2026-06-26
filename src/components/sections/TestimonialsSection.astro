@@ -1,7 +1,7 @@
 ---
 import TestimonialCard from '../ui/TestimonialCard.astro';
 import { testimonials, getMetrics, getFeatured } from '../../data/testimonials';
-import { trips } from '../../data/trips';
+import { pastDestinations } from '../../data/trips';
 
 const metrics  = getMetrics(testimonials);
 const featured = getFeatured(testimonials, 4);
@@ -220,8 +220,7 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
           </div>
           <div class="form-field">
             <label for="field-instagram" class="form-label">
-              Tu @instagram
-              <span class="text-[var(--color-charcoal-mid)] font-normal">(opcional)</span>
+              Tu @instagram <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
             </label>
             <div class="input-prefix-wrap">
               <span class="input-prefix" aria-hidden="true">@</span>
@@ -231,6 +230,7 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
                 name="instagram"
                 autocomplete="username"
                 placeholder="tuinstagram"
+                required
                 class="form-input with-prefix"
               />
             </div>
@@ -252,8 +252,8 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
             class="form-input"
           >
             <option value="" disabled selected>Seleccioná un destino</option>
-            {trips.map(t => (
-              <option value={t.title}>{t.title} — {t.country}</option>
+            {pastDestinations.map(d => (
+              <option value={d}>{d}</option>
             ))}
             <option value="Otro destino">Otro destino</option>
           </select>
@@ -857,10 +857,12 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
   // ── Validation ──
   function validate() {
     const name = document.getElementById('field-name').value.trim();
+    const ig   = document.getElementById('field-instagram').value.trim();
     const dest = document.getElementById('field-destination').value;
     const text = textarea.value.trim();
 
     if (!name) return 'Por favor ingresá tu nombre.';
+    if (!ig)   return 'Tu @instagram es obligatorio para verificar la reseña.';
     if (!dest) return 'Por favor seleccioná un destino.';
     if (!hiddenStars.value) return 'Por favor seleccioná una calificación.';
     if (!hiddenNps.value) return 'Por favor indicá tu NPS (0-10).';

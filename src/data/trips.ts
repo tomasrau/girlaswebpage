@@ -69,6 +69,12 @@ export const trips: Trip[] = [
   },
 ];
 
+// Destinos ya realizados — se muestran en el formulario de reseñas.
+// Agregar acá cada vez que un viaje finaliza.
+export const pastDestinations: string[] = [
+  'Pipa, Brasil',
+];
+
 export const getFeaturedTrips = () => trips.filter((t) => t.featured);
 export const getTripBySlug = (slug: string) => trips.find((t) => t.slug === slug);
 export const getTripsByCategory = (category: Trip['category']) => trips.filter((t) => t.category === category);
