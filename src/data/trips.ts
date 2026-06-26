@@ -72,7 +72,7 @@ export const trips: Trip[] = [
 // Destinos ya realizados — se muestran en el formulario de reseñas.
 // Agregar acá cada vez que un viaje finaliza.
 export const pastDestinations: string[] = [
-  'Pipa, Brasil',
+  'Buzios, Brasil',
 ];
 
 export const getFeaturedTrips = () => trips.filter((t) => t.featured);
