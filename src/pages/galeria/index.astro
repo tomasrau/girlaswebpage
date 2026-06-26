@@ -2,24 +2,58 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import NewsletterSection from '../../components/sections/NewsletterSection.astro';
 
-const photos = [
-  { src: '/images/gallery/01.jpg', alt: 'Trekking en la Patagonia', caption: 'Patagonia Austral', cols: 'col-span-2 row-span-2' },
-  { src: '/images/gallery/02.jpg', alt: 'Atardecer en el Valle de Uco', caption: 'Mendoza' },
-  { src: '/images/gallery/03.jpg', alt: 'Ciudad Amurallada de Cartagena', caption: 'Colombia' },
-  { src: '/images/gallery/04.jpg', alt: 'Salinas Grandes de Jujuy', caption: 'Norte Argentino', cols: 'col-span-2' },
-  { src: '/images/gallery/05.jpg', alt: 'Cataratas del Iguazú', caption: 'Misiones' },
-  { src: '/images/gallery/06.jpg', alt: 'Machu Picchu al amanecer', caption: 'Perú' },
-  { src: '/images/gallery/07.jpg', alt: 'Retiro de yoga en la montaña', caption: 'Retiro Mendoza' },
-  { src: '/images/gallery/08.jpg', alt: 'Grupo de viajeras en Colombia', caption: 'Colombia Mágica' },
+const posts = [
+  {
+    src: '/images/gallery/gallery-01.png',
+    href: 'https://www.instagram.com/p/DaBDJf0FuSz/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+    featured: true,
+  },
+  {
+    src: '/images/gallery/gallery-02.png',
+    href: 'https://www.instagram.com/p/DZ6BTPMFulJ/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-03.png',
+    href: 'https://www.instagram.com/p/DZ-_G8_FlM7/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-04.png',
+    href: 'https://www.instagram.com/p/DZ--XEaRzIx/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-05.png',
+    href: 'https://www.instagram.com/p/DZ-mG19lniV/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-06.png',
+    href: 'https://www.instagram.com/p/DaFyHMCF2OD/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-07.png',
+    href: 'https://www.instagram.com/p/DZ6CBiRxkBG/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
+  {
+    src: '/images/gallery/gallery-08.png',
+    href: 'https://www.instagram.com/p/DZ6BuH3Rupb/',
+    alt: 'Experiencia Girlas — publicación de Instagram',
+  },
 ];
 ---
 
 <MainLayout
-  title="Galería"
-  description="Mirá las fotos de nuestras experiencias de viaje. Patagonia, Colombia, Perú, Norte Argentino y más."
+  title="Galería — Girlas"
+  description="Fotos reales de las experiencias Girlas. Surf, playa, comunidad y aventura para mujeres."
 >
-  <!-- Header -->
-  <div class="bg-[var(--color-charcoal)] text-white pt-32 pb-16">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────── -->
+  <div class="bg-[var(--color-charcoal)] text-white pt-32 pb-14">
     <div class="container-girlas">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-px bg-[var(--color-coral)]" />
@@ -28,52 +62,172 @@ const photos = [
       <h1 class="font-display text-5xl lg:text-6xl font-bold text-white mb-4">
         Momentos Girlas
       </h1>
-      <p class="text-white/70 text-xl max-w-xl">
-        Cada foto cuenta una historia. Estas son algunas de las aventuras que vivimos juntas.
+      <p class="text-white/65 text-lg max-w-lg leading-relaxed mb-6">
+        Así se viven nuestras experiencias. Fotos reales de la comunidad.
       </p>
+      <a
+        href="https://instagram.com/girlas.ar"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-white/70 text-sm font-medium hover:text-white transition-colors group"
+        aria-label="Ver perfil de Instagram de Girlas"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        @girlas.ar
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
     </div>
   </div>
 
-  <!-- Gallery grid -->
-  <section class="section-padding">
-    <div class="container-girlas">
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-        {photos.map(({ src, alt, caption, cols }) => (
-          <div
-            class:list={[
-              'relative overflow-hidden rounded-[var(--radius-card)] group cursor-pointer',
-              cols || '',
-            ]}
-          >
-            <img
-              src={src}
-              alt={alt}
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white text-sm font-medium">{caption}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div class="text-center mt-12">
-        <p class="text-[var(--color-charcoal-mid)] mb-4">¿Querés ver más? Seguinos en Instagram.</p>
+  <!-- ── GALLERY GRID ───────────────────────────────────────────── -->
+  <section class="bg-[var(--color-charcoal)] pb-2" aria-label="Galería de fotos">
+    <div class="gallery-grid">
+      {posts.map((post, i) => (
         <a
-          href="https://instagram.com/girlas.ar"
+          href={post.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[var(--color-charcoal)] text-white font-semibold hover:bg-[var(--color-charcoal-mid)] transition-all"
+          class:list={['gallery-item', post.featured && 'gallery-item--featured']}
+          aria-label={`Ver publicación ${i + 1} en Instagram`}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-          @girlas.ar
+          <img
+            src={post.src}
+            alt={post.alt}
+            loading={i < 3 ? 'eager' : 'lazy'}
+            class="gallery-img"
+          />
+          <div class="gallery-overlay" aria-hidden="true">
+            <div class="gallery-overlay-content">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+              <span>Ver en Instagram</span>
+            </div>
+          </div>
         </a>
-      </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────── -->
+  <section class="bg-[var(--color-charcoal)] pt-10 pb-16">
+    <div class="container-girlas text-center">
+      <p class="text-white/50 text-sm mb-5 tracking-wide">
+        ¿Querés ver más? Seguinos en Instagram.
+      </p>
+      <a
+        href="https://instagram.com/girlas.ar"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white hover:text-[var(--color-charcoal)] transition-all duration-200"
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        @girlas.ar
+      </a>
     </div>
   </section>
 
   <NewsletterSection variant="coral" />
+
 </MainLayout>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  @media (max-width: 639px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery-item--featured {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .gallery-item--featured {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    aspect-ratio: 1 / 1;
+    background: #111;
+  }
+
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gallery-item:hover .gallery-img {
+    transform: scale(1.06);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    backdrop-filter: blur(1px);
+  }
+
+  .gallery-item:hover .gallery-overlay,
+  .gallery-item:focus-visible .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    transform: translateY(6px);
+    transition: transform 0.25s ease;
+  }
+
+  .gallery-item:hover .gallery-overlay-content {
+    transform: translateY(0);
+  }
+
+  .gallery-overlay-content span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  .gallery-item:focus-visible {
+    outline: 3px solid var(--color-coral);
+    outline-offset: 2px;
+    z-index: 1;
+  }
+</style>
