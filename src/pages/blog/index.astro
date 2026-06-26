@@ -4,49 +4,7 @@ import NewsletterSection from '../../components/sections/NewsletterSection.astro
 import TestimonialCard from '../../components/ui/TestimonialCard.astro';
 import { testimonials, getMetrics } from '../../data/testimonials';
 import { pastDestinations } from '../../data/trips';
-
-const posts = [
-  {
-    slug: 'viajar-sola-primer-vez',
-    title: '10 consejos para viajar sola por primera vez',
-    excerpt: 'Todo lo que necesitás saber antes de tu primer viaje en soledad. Desde la elección del destino hasta cómo mantenerte conectada con tu familia.',
-    image: '/images/blog/viajar-sola.jpg',
-    date: '15 de mayo, 2025',
-    category: 'Consejos',
-    readTime: '5 min',
-    author: 'Sofía Ramírez',
-  },
-  {
-    slug: 'mejores-destinos-argentina',
-    title: 'Los 7 destinos imperdibles de Argentina para mujeres viajeras',
-    excerpt: 'De la Patagonia al Norte argentino: estos son los lugares que toda mujer viajera debería conocer en su propio país.',
-    image: '/images/blog/argentina.jpg',
-    date: '3 de abril, 2025',
-    category: 'Destinos',
-    readTime: '8 min',
-    author: 'Lucía Fernández',
-  },
-  {
-    slug: 'que-llevar-retiro-bienestar',
-    title: '¿Qué llevar a un retiro de bienestar? La guía definitiva',
-    excerpt: 'Ropa, accesorios, mentalidad. Todo lo que necesitás para aprovechar al máximo tu próximo retiro de yoga y meditación.',
-    image: '/images/blog/retiro.jpg',
-    date: '20 de marzo, 2025',
-    category: 'Guías',
-    readTime: '6 min',
-    author: 'Martina Gómez',
-  },
-  {
-    slug: 'machu-picchu-guia-completa',
-    title: 'Machu Picchu: la guía completa para tu visita',
-    excerpt: 'Cómo llegar, cuándo ir, qué ver y cómo aprovechar al máximo este lugar mágico. Todo lo que necesitás saber.',
-    image: '/images/blog/peru.jpg',
-    date: '8 de febrero, 2025',
-    category: 'Destinos',
-    readTime: '12 min',
-    author: 'Sofía Ramírez',
-  },
-];
+import { posts } from '../../data/posts';
 
 const metrics  = getMetrics(testimonials);
 const hasReviews = testimonials.length > 0;
