@@ -13,7 +13,7 @@ const {
   subtitle,
   ctaPrimary = { label: 'Ver experiencias', href: '/experiencias' },
   ctaSecondary = { label: 'Conocenos', href: '/nosotras' },
-  backgroundImage = '/images/hero-bg.jpg',
+  backgroundImage = '/images/hero-bkg-1920.jpg',
   height = 'full',
 } = Astro.props;
 
@@ -32,10 +32,15 @@ const heights = {
   <div class="absolute inset-0 z-0">
     <img
       src={backgroundImage}
+      srcset="/images/hero-bkg-800.jpg 800w, /images/hero-bkg-1280.jpg 1280w, /images/hero-bkg-1920.jpg 1920w"
+      sizes="100vw"
       alt=""
       class="w-full h-full object-cover object-center"
       loading="eager"
       fetchpriority="high"
+      decoding="async"
+      width="1920"
+      height="1080"
     />
     <!-- Gradient overlay: dark left for text, transparent right -->
     <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/50 to-transparent" />
