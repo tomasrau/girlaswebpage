@@ -7,11 +7,12 @@ const metrics  = getMetrics(testimonials);
 const featured = getFeatured(testimonials, 4);
 const hasData  = testimonials.length > 0;
 
-// Configurar en formspree.io (gratis hasta 50 envíos/mes)
-// 1. Crear cuenta en https://formspree.io
-// 2. Crear un nuevo form y copiar el ID (ej: xpzbqwwj)
-// 3. Reemplazar el valor de FORMSPREE_ID
-const FORMSPREE_ID = 'YOUR_FORM_ID';
+// URL del Google Apps Script Web App — configurar en:
+// 1. Google Sheet → Extensiones → Apps Script → Implementar como aplicación web
+// 2. Copiar la URL de implementación
+// 3. Agregar como variable de repositorio APPS_SCRIPT_URL en GitHub
+// 4. Agregar PUBLIC_APPS_SCRIPT_URL=<url> en tu .env local
+const APPS_SCRIPT_URL = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
 
 const npsSign = metrics.npsScore >= 0 ? '+' : '';
 ---
@@ -360,7 +361,7 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
       <!-- Consent + Submit -->
       <div class="form-submit-area">
         <p class="text-xs text-[var(--color-charcoal-mid)] text-center max-w-sm mx-auto">
-          Al enviar aceptás que tu nombre e Instagram puedan aparecer en el sitio luego de ser revisados por el equipo Girlas.
+          Al enviar aceptás que tu nombre e Instagram puedan aparecer públicamente en el sitio de Girlas.
         </p>
         <button type="submit" id="submit-btn" class="submit-btn">
           <span class="submit-label">Enviar mi reseña</span>
@@ -382,7 +383,7 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
         ¡Gracias por compartir!
       </h3>
       <p class="text-[var(--color-charcoal-mid)] text-center leading-relaxed">
-        Tu reseña fue recibida. El equipo Girlas la va a revisar y publicar pronto.
+        Tu reseña ya es parte de la comunidad Girlas y va a aparecer en el sitio en unos minutos.
       </p>
       <button type="button" id="close-success" class="submit-btn" style="background:var(--color-teal)">
         Cerrar
@@ -745,8 +746,7 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
 </style>
 
 <!-- ─── Script ──────────────────────────────────────────────────────────── -->
-<script define:vars={{ FORMSPREE_ID }}>
-  const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_ID}`;
+<script is:inline define:vars={{ APPS_SCRIPT_URL }}>
 
   const dialog       = document.getElementById('review-dialog');
   const openBtn      = document.getElementById('open-review-modal');
@@ -877,24 +877,39 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
     const err = validate();
     if (err) { formError.textContent = err; return; }
 
+    if (!APPS_SCRIPT_URL) {
+      formError.textContent = 'El formulario no está configurado aún. Escribinos por WhatsApp.';
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.classList.add('loading');
 
     try {
-      const data = new FormData(form);
-      const res  = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
+      const payload = new URLSearchParams({
+        name:        document.getElementById('field-name').value.trim(),
+        instagram:   document.getElementById('field-instagram').value.trim(),
+        destination: document.getElementById('field-destination').value,
+        stars:       hiddenStars.value,
+        nps:         hiddenNps.value,
+        wouldReturn: hiddenWouldReturn.value,
+        review:      textarea.value.trim(),
       });
 
-      if (res.ok) {
+      const res  = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: payload,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      });
+
+      const body = await res.json().catch(() => ({}));
+
+      if (body?.ok) {
         form.hidden = true;
         successPanel.hidden = false;
       } else {
-        const body = await res.json().catch(() => ({}));
         formError.textContent =
-          body?.errors?.[0]?.message ||
+          body?.error ||
           'Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.';
         submitBtn.disabled = false;
         submitBtn.classList.remove('loading');

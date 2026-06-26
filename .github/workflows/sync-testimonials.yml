@@ -1,0 +1,70 @@
+name: Sync testimonials from Google Sheets
+
+on:
+  repository_dispatch:
+    types: [testimonial-submitted]
+  workflow_dispatch:
+  schedule:
+    # Fallback: re-sync every 6 hours in case of missed webhooks
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  sync-and-deploy:
+    name: Sync & Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch approved testimonials from Sheet
+        env:
+          SHEET_ENDPOINT: ${{ vars.APPS_SCRIPT_URL }}
+        run: node scripts/sync-testimonials.mjs
+
+      - name: Commit updated testimonials if changed
+        run: |
+          git config user.name "girlas-bot"
+          git config user.email "bot@girlas.com.ar"
+          if ! git diff --quiet src/data/testimonials.ts; then
+            git add src/data/testimonials.ts
+            git commit -m "chore: sync testimonials from sheet"
+            git push
+          else
+            echo "No changes in testimonials.ts, skipping commit."
+          fi
+
+      - name: Build Astro site
+        run: npm run build
+        env:
+          PUBLIC_APPS_SCRIPT_URL: ${{ vars.APPS_SCRIPT_URL }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
