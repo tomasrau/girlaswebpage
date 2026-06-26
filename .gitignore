@@ -24,6 +24,6 @@ Thumbs.db
 # Claude Code local config (resources, memory, settings — no van al repo)
 .claude/
 
-# Imágenes grandes de trabajo (optimizar antes de commitear)
-public/images/trips/*.jpg
+# Imágenes originales de trabajo sin optimizar
+public/images/trips/*.png
 public/images/trips/*.jpeg
