@@ -10,6 +10,7 @@ export interface Trip {
   tags: string[];
   featured?: boolean;
   comingSoon?: boolean;
+  soldOut?: boolean;
   description: string;
   highlights: string[];
   includes: string[];
@@ -24,10 +25,11 @@ export const trips: Trip[] = [
     country: 'Brasil',
     duration: '7 días',
     price: 'U$D1.300',
-    image: '/images/trips/pipa.png',
+    image: '/images/trips/pipa.jpg',
     tags: ['Playa', 'Surf', 'Drinks'],
     featured: true,
     comingSoon: true,
+    soldOut: true,
     description: 'Pipa es uno de los destinos más vibrantes del nordeste brasileño. Playas paradisíacas, surf, fiesta y una energía que te va a enamorar.',
     highlights: ['Praia do Amor', 'Barrancas de Tibau do Sul', 'Vida nocturna', 'Surf y kitesurf'],
     includes: ['Por confirmar'],
@@ -40,7 +42,7 @@ export const trips: Trip[] = [
     country: 'Brasil',
     duration: 'Por confirmar',
     price: 'Próximamente',
-    image: '/images/trips/itamambuca.png',
+    image: '/images/trips/itamambuca.jpg',
     tags: ['Surf', 'Naturaleza', 'Relax'],
     featured: true,
     comingSoon: true,
@@ -56,8 +58,7 @@ export const trips: Trip[] = [
     country: 'Brasil',
     duration: 'Por confirmar',
     price: 'Próximamente',
-    image: '/images/trips/dorosa.png',
-    imagePosition: 'center 8%',
+    image: '/images/trips/dorosa.jpg',
     tags: ['Playa', 'Surf', 'Naturaleza'],
     featured: true,
     comingSoon: true,

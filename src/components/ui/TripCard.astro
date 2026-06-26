@@ -9,6 +9,7 @@ interface Props {
   tags?: string[];
   href?: string;
   featured?: boolean;
+  soldOut?: boolean;
 }
 
 const {
@@ -21,16 +22,18 @@ const {
   tags = [],
   href = '#',
   featured = false,
+  soldOut = false,
 } = Astro.props;
 ---
 
 <article
   class:list={[
     'group relative rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-1',
-    featured ? 'ring-2 ring-[var(--color-coral)]' : '',
+    featured && !soldOut ? 'ring-2 ring-[var(--color-coral)]' : '',
+    soldOut ? 'ring-2 ring-[var(--color-charcoal)]/30' : '',
   ]}
 >
-  {featured && (
+  {featured && !soldOut && (
     <div class="absolute top-4 left-4 z-10">
       <span class="px-3 py-1 rounded-full bg-[var(--color-coral)] text-white text-xs font-semibold tracking-wide">
         ✦ Destacado
@@ -43,11 +46,28 @@ const {
     <img
       src={image}
       alt={`Experiencia: ${title} en ${destination}`}
-      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      class:list={[
+        'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105',
+        soldOut ? 'brightness-[0.55] saturate-[0.4]' : '',
+      ]}
       style={`object-position: ${imagePosition}`}
       loading="lazy"
     />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    {!soldOut && (
+      <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    )}
+
+    {soldOut && (
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 select-none">
+        <!-- Diagonal ribbon tape effect -->
+        <div class="relative">
+          <div class="sold-out-stamp">
+            <span class="sold-out-line1">SOLD</span>
+            <span class="sold-out-line2">OUT</span>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 
   <!-- Content -->
@@ -89,16 +109,58 @@ const {
       </div>
     </div>
 
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full border-2 border-[var(--color-coral)] text-[var(--color-coral)] text-sm font-semibold hover:bg-[var(--color-coral)] hover:text-white transition-all"
-    >
-      Para más info
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </a>
+    {soldOut ? (
+      <div class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-[var(--color-charcoal)]/8 border-2 border-[var(--color-charcoal)]/20 text-[var(--color-charcoal)]/40 text-sm font-semibold cursor-not-allowed">
+        Agotado
+      </div>
+    ) : (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full border-2 border-[var(--color-coral)] text-[var(--color-coral)] text-sm font-semibold hover:bg-[var(--color-coral)] hover:text-white transition-all"
+      >
+        Para más info
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    )}
   </div>
 </article>
+
+<style>
+  .sold-out-stamp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.6rem;
+    border: 3px solid rgba(255,255,255,0.85);
+    border-radius: 6px;
+    transform: rotate(-12deg);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.18);
+    backdrop-filter: blur(2px);
+    gap: 0;
+    line-height: 1;
+  }
+  .sold-out-line1 {
+    font-family: var(--font-display, 'Ojuju', sans-serif);
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    display: block;
+  }
+  .sold-out-line2 {
+    font-family: var(--font-display, 'Ojuju', sans-serif);
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    display: block;
+  }
+</style>
