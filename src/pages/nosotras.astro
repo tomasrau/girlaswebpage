@@ -1,6 +1,9 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import NewsletterSection from '../components/sections/NewsletterSection.astro';
+import girlasAboutImg from '../assets/images/girlas-about.jpg';
+import inaImg from '../assets/images/ina-about.jpg';
+import valuImg from '../assets/images/valu-about.jpg';
 
 const values = [
   { title: 'Libertad', description: 'Creemos que viajar es uno de los actos más liberadores. Diseñamos experiencias que te permiten ser completamente vos.' },
@@ -11,22 +14,16 @@ const values = [
 
 const team = [
   {
-    name: 'Sofía Ramírez',
-    role: 'Fundadora & Directora de Experiencias',
-    bio: 'Viajó por 40 países antes de crear Girlas. Cree que cada viaje tiene el poder de transformar quiénes somos.',
-    image: '/images/team/sofia.jpg',
+    name: 'Ina',
+    role: 'Co-fundadora',
+    bio: '',
+    image: inaImg,
   },
   {
-    name: 'Lucía Fernández',
-    role: 'Coordinadora de Viajes',
-    bio: 'Experta en logística y coordinación. Hace que cada detalle de tus viajes sea impecable.',
-    image: '/images/team/lucia.jpg',
-  },
-  {
-    name: 'Martina Gómez',
-    role: 'Guía & Experta en Bienestar',
-    bio: 'Instructora de yoga certificada e intérprete cultural. Trae profundidad a cada destino que visitamos.',
-    image: '/images/team/martina.jpg',
+    name: 'Valu',
+    role: 'Co-fundadora',
+    bio: '',
+    image: valuImg,
   },
 ];
 ---
@@ -60,7 +57,7 @@ const team = [
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div class="relative">
           <img
-            src="/images/girlas-about.heic"
+            src={girlasAboutImg.src}
             alt="El equipo de Girlas"
             class="rounded-[var(--radius-card)] w-full aspect-[4/3] object-cover shadow-[var(--shadow-hover)]"
             loading="lazy"
@@ -80,13 +77,13 @@ const team = [
           </h2>
           <div class="space-y-4 text-[var(--color-charcoal-mid)] text-base leading-relaxed">
             <p>
-              En 2019, Sofía volvió de un viaje a Marruecos con algo claro: viajar sola como mujer era posible, maravilloso, y necesitaba un espacio que lo hiciera más accesible para todas.
+              Girlas nació de una idea clara: viajar en grupo como mujer tiene que ser una experiencia cuidada, divertida y auténtica.
             </p>
             <p>
-              Junto a Lucía y Martina, fundaron Girlas con una propuesta simple pero poderosa: <strong class="text-[var(--color-charcoal)] font-semibold">viajes grupales de mujeres, diseñados desde cero por mujeres que entienden lo que necesitamos</strong>.
+              Ina y Valu fundaron Girlas con una propuesta simple pero poderosa: <strong class="text-[var(--color-charcoal)] font-semibold">viajes grupales de mujeres, diseñados desde cero por mujeres que entienden lo que necesitamos</strong>.
             </p>
             <p>
-              Hoy, cinco años y más de 500 viajeras después, Girlas es la comunidad de mujeres viajeras más vibrante de Argentina.
+              Hoy, Girlas es la comunidad de mujeres viajeras más vibrante de Argentina.
             </p>
           </div>
         </div>
@@ -132,20 +129,19 @@ const team = [
           Las chicas detrás de Girlas
         </h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {team.map(({ name, role, bio, image }) => (
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-xl mx-auto">
+        {team.map(({ name, role, image }) => (
           <div class="text-center group">
             <div class="relative inline-block mb-5">
               <img
-                src={image}
+                src={image.src}
                 alt={`Foto de ${name}`}
-                class="w-40 h-40 rounded-full object-cover mx-auto shadow-[var(--shadow-card)] ring-4 ring-[var(--color-cream-dark)] group-hover:ring-[var(--color-coral)]/30 transition-all"
+                class="w-44 h-44 rounded-full object-cover mx-auto shadow-[var(--shadow-card)] ring-4 ring-[var(--color-cream-dark)] group-hover:ring-[var(--color-coral)]/30 transition-all"
                 loading="lazy"
               />
             </div>
             <h3 class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-1">{name}</h3>
-            <p class="text-[var(--color-coral)] text-sm font-medium mb-3">{role}</p>
-            <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed max-w-xs mx-auto">{bio}</p>
+            <p class="text-[var(--color-coral)] text-sm font-medium">{role}</p>
           </div>
         ))}
       </div>
