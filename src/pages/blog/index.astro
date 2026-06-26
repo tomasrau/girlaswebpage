@@ -1,6 +1,9 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import NewsletterSection from '../../components/sections/NewsletterSection.astro';
+import TestimonialCard from '../../components/ui/TestimonialCard.astro';
+import { testimonials, getMetrics } from '../../data/testimonials';
+import { trips } from '../../data/trips';
 
 const posts = [
   {
@@ -45,115 +48,844 @@ const posts = [
   },
 ];
 
-const categories = ['Todos', 'Consejos', 'Destinos', 'Guías', 'Experiencias'];
+const metrics  = getMetrics(testimonials);
+const hasReviews = testimonials.length > 0;
+const npsSign  = metrics.npsScore >= 0 ? '+' : '';
+const sorted   = [...testimonials].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+const APPS_SCRIPT_URL = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
 ---
 
 <MainLayout
-  title="Blog"
-  description="Consejos de viaje, guías de destinos e historias de mujeres viajeras en el blog de Girlas."
+  title="Blog & Reseñas — Girlas"
+  description="Artículos de viaje, guías de destinos y reseñas reales de viajeras de la comunidad Girlas."
 >
-  <!-- Header -->
-  <div class="bg-[var(--color-cream-dark)] pt-32 pb-16 border-b border-[var(--color-cream-dark)]">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────── -->
+  <div class="bg-[var(--color-cream-dark)] pt-32 pb-10 border-b border-[var(--color-cream-dark)]">
     <div class="container-girlas">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-px bg-[var(--color-coral)]" />
-        <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Blog</span>
+        <span class="text-[var(--color-coral)] text-sm font-medium tracking-widest uppercase">Comunidad</span>
       </div>
       <h1 class="font-display text-5xl lg:text-6xl font-bold text-[var(--color-charcoal)] mb-4">
-        Historias & Consejos
+        Historias & <em class="text-gradient-coral not-italic">Reseñas</em>
       </h1>
-      <p class="text-[var(--color-charcoal-mid)] text-xl max-w-xl mb-6">
-        Inspiración, consejos prácticos y relatos de viaje del mundo Girlas.
+      <p class="text-[var(--color-charcoal-mid)] text-lg max-w-xl leading-relaxed">
+        Inspiración, consejos de viaje y experiencias reales de la comunidad Girlas.
       </p>
-      <a
-        href="/testimonios"
-        class="inline-flex items-center gap-2 text-[var(--color-coral)] font-semibold text-sm hover:gap-3 transition-all"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        </svg>
-        Ver reseñas de viajeras
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
+      <div class="flex items-center gap-6 mt-5 text-sm text-[var(--color-charcoal-mid)]">
+        <span class="flex items-center gap-1.5">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          {posts.length} artículos
+        </span>
+        {hasReviews && (
+          <span class="flex items-center gap-1.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            {metrics.total} reseña{metrics.total !== 1 ? 's' : ''} · {metrics.avgStars}★ promedio
+          </span>
+        )}
+      </div>
     </div>
   </div>
 
-  <section class="section-padding">
+  <!-- ── STICKY TAB BAR ─────────────────────────────────────────── -->
+  <div id="tab-bar" class="bg-white border-b border-[var(--color-cream-dark)] sticky top-0 z-40 transition-shadow duration-200">
     <div class="container-girlas">
-      <!-- Featured post -->
-      {posts[0] && (
-        <a
-          href={`/blog/${posts[0].slug}`}
-          class="group block mb-12 rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all"
-        >
-          <div class="grid grid-cols-1 lg:grid-cols-2">
-            <div class="relative overflow-hidden aspect-video lg:aspect-auto">
-              <img
-                src={posts[0].image}
-                alt={posts[0].title}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 min-h-[300px]"
-                loading="eager"
-              />
-              <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-[var(--color-coral)] text-white text-xs font-semibold">
-                Destacado
-              </span>
-            </div>
-            <div class="p-8 lg:p-10 flex flex-col justify-center">
-              <span class="text-[var(--color-coral)] text-xs font-semibold uppercase tracking-widest mb-3">
-                {posts[0].category} · {posts[0].readTime} de lectura
-              </span>
-              <h2 class="font-display text-3xl lg:text-4xl font-bold text-[var(--color-charcoal)] mb-4 group-hover:text-[var(--color-coral)] transition-colors">
-                {posts[0].title}
-              </h2>
-              <p class="text-[var(--color-charcoal-mid)] leading-relaxed mb-6">{posts[0].excerpt}</p>
-              <div class="flex items-center gap-3 text-sm text-[var(--color-charcoal-mid)]">
-                <span class="font-medium text-[var(--color-charcoal)]">{posts[0].author}</span>
-                <span>·</span>
-                <span>{posts[0].date}</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      )}
+      <div role="tablist" aria-label="Secciones del blog" class="flex gap-2 py-3">
 
-      <!-- Posts grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {posts.slice(1).map(({ slug, title, excerpt, image, date, category, readTime, author }) => (
+        <button
+          id="tab-articulos"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-articulos"
+          data-tab="articulos"
+          class="tab-btn active flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Artículos
+          <span class="tab-count">{posts.length}</span>
+        </button>
+
+        <button
+          id="tab-resenas"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-resenas"
+          data-tab="resenas"
+          class="tab-btn flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Reseñas
+          {hasReviews && <span class="tab-count">{metrics.total}</span>}
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANEL: ARTÍCULOS ──────────────────────────────────────── -->
+  <div id="panel-articulos" role="tabpanel" aria-labelledby="tab-articulos" class="tab-panel">
+    <section class="section-padding">
+      <div class="container-girlas">
+
+        {posts[0] && (
           <a
-            href={`/blog/${slug}`}
-            class="group block rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] hover:-translate-y-1 transition-all"
+            href={`/blog/${posts[0].slug}`}
+            class="group block mb-10 rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all duration-300"
           >
-            <div class="relative overflow-hidden aspect-video">
-              <img
-                src={image}
-                alt={title}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-            </div>
-            <div class="p-5">
-              <span class="text-[var(--color-coral)] text-xs font-semibold uppercase tracking-widest mb-2 block">
-                {category} · {readTime}
-              </span>
-              <h3 class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-2 leading-snug group-hover:text-[var(--color-coral)] transition-colors">
-                {title}
-              </h3>
-              <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed mb-4 line-clamp-3">
-                {excerpt}
-              </p>
-              <div class="flex items-center gap-2 text-xs text-[var(--color-charcoal-mid)] pt-4 border-t border-[var(--color-cream-dark)]">
-                <span class="font-medium">{author}</span>
-                <span>·</span>
-                <span>{date}</span>
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+              <div class="relative overflow-hidden aspect-video lg:aspect-auto" style="min-height:260px">
+                <img
+                  src={posts[0].image}
+                  alt={posts[0].title}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="eager"
+                />
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-[var(--color-coral)] text-white text-xs font-semibold">
+                  Destacado
+                </span>
+              </div>
+              <div class="p-7 lg:p-10 flex flex-col justify-center">
+                <span class="text-[var(--color-coral)] text-xs font-semibold uppercase tracking-widest mb-3">
+                  {posts[0].category} · {posts[0].readTime} de lectura
+                </span>
+                <h2 class="font-display text-2xl lg:text-3xl font-bold text-[var(--color-charcoal)] mb-3 group-hover:text-[var(--color-coral)] transition-colors leading-snug">
+                  {posts[0].title}
+                </h2>
+                <p class="text-[var(--color-charcoal-mid)] leading-relaxed mb-5 text-sm lg:text-base line-clamp-3">
+                  {posts[0].excerpt}
+                </p>
+                <div class="flex items-center gap-3 text-sm text-[var(--color-charcoal-mid)]">
+                  <span class="font-medium text-[var(--color-charcoal)]">{posts[0].author}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{posts[0].date}</span>
+                </div>
               </div>
             </div>
           </a>
-        ))}
+        )}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.slice(1).map(({ slug, title, excerpt, image, date, category, readTime, author }) => (
+            <a
+              href={`/blog/${slug}`}
+              class="group flex flex-col rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <div class="relative overflow-hidden aspect-video">
+                <img
+                  src={image}
+                  alt={title}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-5 flex flex-col flex-1">
+                <span class="text-[var(--color-coral)] text-xs font-semibold uppercase tracking-widest mb-2 block">
+                  {category} · {readTime}
+                </span>
+                <h3 class="font-display text-lg font-semibold text-[var(--color-charcoal)] mb-2 leading-snug group-hover:text-[var(--color-coral)] transition-colors flex-1">
+                  {title}
+                </h3>
+                <p class="text-[var(--color-charcoal-mid)] text-sm leading-relaxed mb-4 line-clamp-3">
+                  {excerpt}
+                </p>
+                <div class="flex items-center gap-2 text-xs text-[var(--color-charcoal-mid)] pt-4 border-t border-[var(--color-cream-dark)] mt-auto">
+                  <span class="font-medium">{author}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{date}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
+
+  <!-- ── PANEL: RESEÑAS ─────────────────────────────────────────── -->
+  <div id="panel-resenas" role="tabpanel" aria-labelledby="tab-resenas" class="tab-panel" hidden>
+    <section class="section-padding">
+      <div class="container-girlas">
+
+        {hasReviews ? (
+          <>
+            <!-- Metrics -->
+            <div class="grid grid-cols-3 gap-3 sm:gap-5 mb-12 max-w-lg mx-auto">
+              <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[var(--color-gold)] leading-none mb-1">
+                  {metrics.avgStars}
+                </div>
+                <div class="flex justify-center gap-0.5 my-1.5" aria-hidden="true">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <svg width="11" height="11" viewBox="0 0 24 24"
+                      fill={i < Math.round(metrics.avgStars) ? 'var(--color-gold)' : 'none'}
+                      stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  ))}
+                </div>
+                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs leading-snug">Calificación</p>
+              </div>
+              <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
+                <div class={`font-display text-3xl sm:text-4xl font-bold leading-none mb-1 ${metrics.npsScore >= 0 ? 'text-[var(--color-teal)]' : 'text-[var(--color-coral)]'}`}>
+                  {npsSign}{metrics.npsScore}
+                </div>
+                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">NPS Score</p>
+              </div>
+              <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[var(--color-coral)] leading-none mb-1">
+                  {metrics.wouldReturnPct}%
+                </div>
+                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">Volvería</p>
+              </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+              {sorted.map((t) => (
+                <TestimonialCard
+                  name={t.name}
+                  instagramHandle={t.instagramHandle}
+                  stars={t.stars}
+                  nps={t.nps}
+                  wouldReturn={t.wouldReturn}
+                  text={t.text}
+                  trip={t.destination}
+                  date={t.date}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div class="text-center py-16 mb-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[var(--color-coral)]/10 mb-6" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--color-coral)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h3 class="font-display text-2xl font-semibold text-[var(--color-charcoal)] mb-3">
+              Las primeras reseñas están en camino
+            </h3>
+            <p class="text-[var(--color-charcoal-mid)] max-w-sm mx-auto leading-relaxed">
+              Sé parte de la comunidad y contá tu experiencia. Solo tardás 2 minutos.
+            </p>
+          </div>
+        )}
+
+        <!-- CTA -->
+        <div class="text-center border-t border-[var(--color-cream-dark)] pt-10">
+          <p class="text-[var(--color-charcoal-mid)] text-sm mb-4">
+            {hasReviews ? '¿Ya viajaste con Girlas? Tu historia puede inspirar a otras.' : '¿Ya viajaste con nosotras? Contanos.'}
+          </p>
+          <button
+            id="open-review-modal"
+            type="button"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[var(--color-coral)] text-white font-semibold text-base hover:bg-[var(--color-coral-dark)] shadow-lg hover:shadow-xl transition-all active:scale-95"
+            aria-haspopup="dialog"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Contar mi experiencia
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
 
   <NewsletterSection variant="coral" />
+
 </MainLayout>
+
+<!-- ── REVIEW MODAL ──────────────────────────────────────────────── -->
+<dialog id="review-dialog" aria-labelledby="dialog-title" aria-modal="true" class="review-dialog">
+  <div class="dialog-backdrop" id="dialog-backdrop" aria-hidden="true"></div>
+  <div class="dialog-panel" role="document">
+
+    <div class="dialog-header">
+      <div>
+        <h2 id="dialog-title" class="font-display text-2xl font-bold text-[var(--color-charcoal)]">
+          Contá tu experiencia
+        </h2>
+        <p class="text-[var(--color-charcoal-mid)] text-sm mt-1">Tu reseña ayuda a otras mujeres a animarse a viajar.</p>
+      </div>
+      <button id="close-review-modal" type="button" aria-label="Cerrar" class="close-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <form id="review-form" novalidate class="dialog-form">
+      <input type="hidden" name="stars"       id="hidden-stars" />
+      <input type="hidden" name="nps"         id="hidden-nps" />
+      <input type="hidden" name="wouldReturn" id="hidden-would-return" />
+
+      <fieldset class="form-group">
+        <legend class="form-legend">Sobre vos</legend>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="field-name" class="form-label">
+              Tu nombre <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+            </label>
+            <input type="text" id="field-name" name="name" autocomplete="given-name" placeholder="Ej: María G." required class="form-input" />
+          </div>
+          <div class="form-field">
+            <label for="field-instagram" class="form-label">
+              Tu @instagram <span class="text-[var(--color-charcoal-mid)] font-normal">(opcional)</span>
+            </label>
+            <div class="input-prefix-wrap">
+              <span class="input-prefix" aria-hidden="true">@</span>
+              <input type="text" id="field-instagram" name="instagram" autocomplete="username" placeholder="tuinstagram" class="form-input with-prefix" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <legend class="form-legend">Tu viaje</legend>
+        <div class="form-field">
+          <label for="field-destination" class="form-label">
+            ¿A qué destino viajaste? <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+          </label>
+          <select id="field-destination" name="destination" required class="form-input">
+            <option value="" disabled selected>Seleccioná un destino</option>
+            {trips.map(t => (
+              <option value={t.title}>{t.title} — {t.country}</option>
+            ))}
+            <option value="Otro destino">Otro destino</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <span class="form-label" id="stars-label">
+            Tu calificación <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+          </span>
+          <div class="stars-picker" role="radiogroup" aria-labelledby="stars-label" aria-required="true">
+            {[1,2,3,4,5].map(n => (
+              <button type="button" data-value={n} class="star-btn" aria-label={`${n} estrella${n > 1 ? 's' : ''}`} aria-pressed="false">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </button>
+            ))}
+          </div>
+          <p class="star-hint" id="stars-hint" aria-live="polite"></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <legend class="form-legend">Tu opinión</legend>
+        <div class="form-field">
+          <span class="form-label" id="nps-label">
+            ¿Cuánto recomendarías Girlas? <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+          </span>
+          <div class="nps-picker" role="radiogroup" aria-labelledby="nps-label" aria-required="true">
+            {Array.from({ length: 11 }, (_, i) => (
+              <button type="button" data-value={i} class="nps-btn" aria-label={`${i} de 10`} aria-pressed="false">{i}</button>
+            ))}
+          </div>
+          <div class="nps-labels" aria-hidden="true">
+            <span>No la recomendaría</span>
+            <span>La recomendaría muchísimo</span>
+          </div>
+        </div>
+        <div class="form-field">
+          <span class="form-label" id="return-label">
+            ¿Volverías a viajar con Girlas? <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+          </span>
+          <div class="return-picker" role="radiogroup" aria-labelledby="return-label" aria-required="true">
+            <button type="button" data-value="si"     class="return-btn" aria-pressed="false">Sí, seguro</button>
+            <button type="button" data-value="talvez" class="return-btn" aria-pressed="false">Tal vez</button>
+            <button type="button" data-value="no"     class="return-btn" aria-pressed="false">Todavía no</button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <legend class="form-legend">Tu historia</legend>
+        <div class="form-field">
+          <label for="field-text" class="form-label">
+            Contanos tu experiencia <span class="text-[var(--color-coral)]" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="field-text" name="review" rows="4" required minlength="30"
+            placeholder="¿Qué fue lo que más te gustó? ¿Cómo fue la experiencia en el grupo? ¿Qué le dirías a alguien que está por anotarse?"
+            class="form-input resize-none"
+          ></textarea>
+          <p class="text-xs text-[var(--color-charcoal-mid)] mt-1 text-right">
+            <span id="char-count">0</span> caracteres (mín. 30)
+          </p>
+        </div>
+      </fieldset>
+
+      <div class="form-submit-area">
+        <p class="text-xs text-[var(--color-charcoal-mid)] text-center max-w-sm mx-auto">
+          Al enviar aceptás que tu nombre e Instagram puedan aparecer públicamente en el sitio de Girlas.
+        </p>
+        <button type="submit" id="submit-btn" class="submit-btn">
+          <span class="submit-label">Enviar mi reseña</span>
+          <span class="submit-spinner" aria-hidden="true"></span>
+        </button>
+        <p id="form-error" class="form-error" role="alert" aria-live="assertive"></p>
+      </div>
+    </form>
+
+    <div id="review-success" class="review-success" aria-live="polite" hidden>
+      <div class="success-icon" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/>
+        </svg>
+      </div>
+      <h3 class="font-display text-2xl font-bold text-[var(--color-charcoal)] text-center">¡Gracias por compartir!</h3>
+      <p class="text-[var(--color-charcoal-mid)] text-center leading-relaxed">
+        Tu reseña ya es parte de la comunidad Girlas y va a aparecer en el sitio en unos minutos.
+      </p>
+      <button type="button" id="close-success" class="submit-btn" style="background:var(--color-teal)">Cerrar</button>
+    </div>
+
+  </div>
+</dialog>
+
+<!-- ── STYLES ──────────────────────────────────────────────────────── -->
+<style>
+  /* Tabs */
+  .tab-btn {
+    color: var(--color-charcoal-mid);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .tab-btn:hover {
+    color: var(--color-charcoal);
+    background: var(--color-cream-dark);
+  }
+  .tab-btn.active {
+    background: var(--color-coral);
+    color: #fff;
+  }
+  .tab-btn:focus-visible {
+    outline: 2px solid var(--color-coral);
+    outline-offset: 2px;
+  }
+  .tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.3rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.25);
+    color: inherit;
+  }
+  .tab-btn:not(.active) .tab-count {
+    background: var(--color-cream-dark);
+    color: var(--color-charcoal-mid);
+  }
+
+  /* Tab panels */
+  .tab-panel { display: none; }
+  .tab-panel:not([hidden]).active {
+    display: block;
+    animation: tabIn 0.2s ease forwards;
+  }
+  @keyframes tabIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Tab bar shadow on scroll */
+  #tab-bar.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+  /* ── Dialog ── */
+  .review-dialog {
+    position: fixed; inset: 0; margin: 0; padding: 0;
+    width: 100%; max-width: 100%; height: 100%; max-height: 100%;
+    border: none; background: transparent; overflow: hidden;
+    display: none; align-items: center; justify-content: center; z-index: 100;
+  }
+  .review-dialog[open] { display: flex; }
+
+  .dialog-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(38,35,34,0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+
+  .dialog-panel {
+    position: relative; z-index: 1;
+    background: #fff; border-radius: 1.5rem;
+    width: min(560px, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+    overscroll-behavior: contain;
+  }
+
+  .dialog-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--color-cream-dark);
+    position: sticky; top: 0; background: #fff; z-index: 2;
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+
+  .close-btn {
+    width: 2.25rem; height: 2.25rem; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--color-cream-dark); color: var(--color-charcoal-mid);
+    border: none; cursor: pointer; transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+  .close-btn:hover { background: var(--color-coral); color: #fff; }
+  .close-btn:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 2px; }
+
+  .dialog-form { padding: 1.5rem 1.75rem 1.75rem; display: flex; flex-direction: column; gap: 0; }
+
+  .form-group { border: none; padding: 0; margin: 0 0 1.5rem 0; }
+  .form-legend {
+    font-family: var(--font-display,'Ojuju',sans-serif);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-charcoal-mid);
+    margin-bottom: 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-cream-dark);
+    display: block; width: 100%;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .form-field:last-child { margin-bottom: 0; }
+
+  .form-label {
+    font-size: 0.875rem; font-weight: 600; color: var(--color-charcoal);
+    display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;
+  }
+
+  .form-input {
+    width: 100%; padding: 0.65rem 0.875rem;
+    border: 1.5px solid var(--color-cream-dark);
+    border-radius: 0.625rem;
+    font-size: 0.9375rem; font-family: var(--font-body,'Poppins',sans-serif);
+    color: var(--color-charcoal); background: var(--color-cream);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none; -webkit-appearance: none; appearance: none;
+  }
+  .form-input:focus {
+    border-color: var(--color-coral);
+    box-shadow: 0 0 0 3px rgba(247,168,200,0.25);
+    background: #fff;
+  }
+  .form-input::placeholder { color: var(--color-charcoal-mid); opacity: 0.6; }
+
+  .input-prefix-wrap { position: relative; display: flex; align-items: center; }
+  .input-prefix {
+    position: absolute; left: 0.875rem; color: var(--color-coral);
+    font-weight: 600; font-size: 0.9375rem; pointer-events: none; z-index: 1;
+  }
+  .form-input.with-prefix { padding-left: 1.875rem; }
+
+  .stars-picker { display: flex; gap: 0.25rem; }
+  .star-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 0.125rem; border-radius: 0.25rem;
+    transition: transform 0.1s; line-height: 0;
+  }
+  .star-btn:hover { transform: scale(1.15); }
+  .star-btn[aria-pressed="true"] svg { fill: var(--color-gold); }
+  .star-btn:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 2px; }
+
+  .star-hint { font-size: 0.8125rem; color: var(--color-coral); min-height: 1.2em; margin-top: 0.25rem; }
+
+  .nps-picker { display: flex; gap: 0.25rem; flex-wrap: nowrap; }
+  .nps-btn {
+    flex: 1; min-width: 0; aspect-ratio: 1;
+    background: var(--color-cream-dark); border: 1.5px solid transparent;
+    border-radius: 0.5rem;
+    font-family: var(--font-display,'Ojuju',sans-serif);
+    font-size: 0.8125rem; font-weight: 600; color: var(--color-charcoal-mid);
+    cursor: pointer; transition: background 0.12s, border-color 0.12s, color 0.12s;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+  }
+  .nps-btn:hover { background: var(--color-coral); color: #fff; }
+  .nps-btn[aria-pressed="true"] { background: var(--color-coral); border-color: var(--color-coral-dark); color: #fff; }
+  .nps-btn[data-value="9"][aria-pressed="true"],
+  .nps-btn[data-value="10"][aria-pressed="true"] { background: var(--color-teal); border-color: var(--color-teal); }
+  .nps-btn:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 2px; }
+
+  .nps-labels {
+    display: flex; justify-content: space-between;
+    margin-top: 0.375rem; font-size: 0.6875rem; color: var(--color-charcoal-mid);
+  }
+
+  .return-picker { display: flex; gap: 0.625rem; flex-wrap: wrap; }
+  .return-btn {
+    flex: 1; min-width: 90px; padding: 0.625rem 1rem;
+    border-radius: 9999px; border: 1.5px solid var(--color-cream-dark);
+    background: var(--color-cream-dark); color: var(--color-charcoal-mid);
+    font-size: 0.875rem; font-weight: 600;
+    font-family: var(--font-body,'Poppins',sans-serif);
+    cursor: pointer; transition: all 0.15s; text-align: center;
+  }
+  .return-btn:hover { border-color: var(--color-coral); color: var(--color-coral); }
+  .return-btn[aria-pressed="true"] { background: var(--color-coral); border-color: var(--color-coral); color: #fff; }
+  .return-btn[data-value="si"][aria-pressed="true"] { background: var(--color-teal); border-color: var(--color-teal); }
+  .return-btn:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 2px; }
+
+  .form-submit-area {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1rem; padding-top: 1.25rem;
+    border-top: 1px solid var(--color-cream-dark); margin-top: 0.5rem;
+  }
+
+  .submit-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    width: 100%; padding: 0.9rem 2rem; border-radius: 9999px;
+    background: var(--color-coral); color: #fff;
+    font-family: var(--font-body,'Poppins',sans-serif);
+    font-size: 1rem; font-weight: 600; border: none; cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+    box-shadow: 0 4px 14px rgba(247,168,200,0.4);
+  }
+  .submit-btn:hover { background: var(--color-coral-dark); }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .submit-btn:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 3px; }
+
+  .submit-spinner {
+    display: none; width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+    border-radius: 9999px; animation: spin 0.7s linear infinite;
+  }
+  .submit-btn.loading .submit-label { display: none; }
+  .submit-btn.loading .submit-spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .form-error { color: #e74c3c; font-size: 0.8125rem; text-align: center; min-height: 1em; }
+
+  .review-success {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1.25rem; padding: 2.5rem 2rem;
+  }
+  .success-icon {
+    width: 80px; height: 80px; border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-teal) 12%, transparent);
+    display: flex; align-items: center; justify-content: center;
+  }
+</style>
+
+<!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
+<script is:inline define:vars={{ APPS_SCRIPT_URL }}>
+
+  // ── Tab switching ──
+  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  function switchTab(id) {
+    tabBtns.forEach(b => {
+      const active = b.dataset.tab === id;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', String(active));
+    });
+    tabPanels.forEach(p => {
+      const active = p.id === `panel-${id}`;
+      p.classList.toggle('active', active);
+      p.hidden = !active;
+    });
+    history.replaceState(null, '', `#${id}`);
+  }
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const tabs = [...tabBtns];
+        const idx  = tabs.indexOf(btn);
+        const next = tabs[(idx + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+        next.click();
+        next.focus();
+      }
+    });
+  });
+
+  // Init tab from URL hash
+  const initTab = ['articulos','resenas'].includes(location.hash.slice(1))
+    ? location.hash.slice(1)
+    : 'articulos';
+  switchTab(initTab);
+
+  // Tab bar shadow on scroll
+  const tabBar = document.getElementById('tab-bar');
+  window.addEventListener('scroll', () => {
+    tabBar?.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // ── Modal ──
+  const dialog       = document.getElementById('review-dialog');
+  const openBtn      = document.getElementById('open-review-modal');
+  const closeBtn     = document.getElementById('close-review-modal');
+  const backdrop     = document.getElementById('dialog-backdrop');
+  const form         = document.getElementById('review-form');
+  const successPanel = document.getElementById('review-success');
+  const closeSuccess = document.getElementById('close-success');
+  const submitBtn    = document.getElementById('submit-btn');
+  const formError    = document.getElementById('form-error');
+  const charCount    = document.getElementById('char-count');
+  const textarea     = document.getElementById('field-text');
+  const hiddenStars  = document.getElementById('hidden-stars');
+  const hiddenNps    = document.getElementById('hidden-nps');
+  const hiddenReturn = document.getElementById('hidden-would-return');
+
+  function openDialog() {
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+  function closeDialog() {
+    dialog.close();
+    document.body.style.overflow = '';
+    openBtn?.focus();
+  }
+
+  openBtn?.addEventListener('click', openDialog);
+  closeBtn?.addEventListener('click', closeDialog);
+  closeSuccess?.addEventListener('click', closeDialog);
+  backdrop?.addEventListener('click', closeDialog);
+  dialog?.addEventListener('cancel', e => { e.preventDefault(); closeDialog(); });
+
+  // Stars
+  const starBtns   = document.querySelectorAll('.star-btn');
+  const starHint   = document.getElementById('stars-hint');
+  const starLabels = ['','Malo','Regular','Bueno','Muy bueno','Excelente'];
+  let selectedStars = 0;
+
+  starBtns.forEach(btn => {
+    const val = parseInt(btn.dataset.value);
+    btn.addEventListener('mouseenter', () => highlightStars(val));
+    btn.addEventListener('mouseleave', () => highlightStars(selectedStars));
+    btn.addEventListener('click', () => {
+      selectedStars = val;
+      hiddenStars.value = val;
+      highlightStars(val, true);
+      if (starHint) starHint.textContent = starLabels[val] || '';
+    });
+  });
+
+  function highlightStars(upTo, persist = false) {
+    starBtns.forEach(b => {
+      const v = parseInt(b.dataset.value);
+      b.querySelector('svg').setAttribute('fill', v <= upTo ? 'var(--color-gold)' : 'none');
+      if (persist) b.setAttribute('aria-pressed', v <= upTo ? 'true' : 'false');
+    });
+  }
+
+  // NPS
+  const npsBtns = document.querySelectorAll('.nps-btn');
+  npsBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      npsBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      hiddenNps.value = btn.dataset.value;
+    });
+  });
+
+  // Would return
+  const returnBtns = document.querySelectorAll('.return-btn');
+  returnBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      returnBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      hiddenReturn.value = btn.dataset.value;
+    });
+  });
+
+  // Char counter
+  textarea?.addEventListener('input', () => {
+    charCount.textContent = textarea.value.length;
+  });
+
+  // Validation
+  function validate() {
+    const name = document.getElementById('field-name').value.trim();
+    const dest = document.getElementById('field-destination').value;
+    const text = textarea.value.trim();
+    if (!name)              return 'Por favor ingresá tu nombre.';
+    if (!dest)              return 'Por favor seleccioná un destino.';
+    if (!hiddenStars.value) return 'Por favor seleccioná una calificación.';
+    if (!hiddenNps.value)   return 'Por favor indicá tu NPS (0-10).';
+    if (!hiddenReturn.value) return '¿Volverías a viajar con Girlas?';
+    if (text.length < 30)   return `Contanos un poco más (${30 - text.length} caracteres más).`;
+    return null;
+  }
+
+  // Submit
+  form?.addEventListener('submit', async e => {
+    e.preventDefault();
+    formError.textContent = '';
+    const err = validate();
+    if (err) { formError.textContent = err; return; }
+    if (!APPS_SCRIPT_URL) {
+      formError.textContent = 'El formulario no está configurado. Escribinos por WhatsApp.';
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    try {
+      const payload = new URLSearchParams({
+        name:        document.getElementById('field-name').value.trim(),
+        instagram:   document.getElementById('field-instagram').value.trim(),
+        destination: document.getElementById('field-destination').value,
+        stars:       hiddenStars.value,
+        nps:         hiddenNps.value,
+        wouldReturn: hiddenReturn.value,
+        review:      textarea.value.trim(),
+      });
+      const res  = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST', body: payload,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      });
+      const body = await res.json().catch(() => ({}));
+      if (body?.ok) {
+        form.hidden = true;
+        successPanel.hidden = false;
+      } else {
+        formError.textContent = body?.error || 'Hubo un error al enviar. Intentá por WhatsApp.';
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    } catch {
+      formError.textContent = 'Error de conexión. Revisá tu internet e intentá de nuevo.';
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+    }
+  });
+
+  // Reset on close
+  dialog?.addEventListener('close', () => {
+    form.reset();
+    form.hidden = false;
+    successPanel.hidden = true;
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('loading');
+    formError.textContent = '';
+    selectedStars = 0;
+    hiddenStars.value = '';
+    hiddenNps.value = '';
+    hiddenReturn.value = '';
+    if (starHint) starHint.textContent = '';
+    if (charCount) charCount.textContent = '0';
+    highlightStars(0);
+    npsBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+    returnBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+  });
+</script>
