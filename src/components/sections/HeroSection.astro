@@ -4,7 +4,6 @@ interface Props {
   subtitle?: string;
   ctaPrimary?: { label: string; href: string };
   ctaSecondary?: { label: string; href: string };
-  backgroundImage?: string;
   height?: 'full' | 'large' | 'medium';
 }
 
@@ -13,7 +12,6 @@ const {
   subtitle,
   ctaPrimary = { label: 'Ver experiencias', href: '/experiencias' },
   ctaSecondary = { label: 'Conocenos', href: '/nosotras' },
-  backgroundImage = '/images/hero-bkg-1920.jpg',
   height = 'full',
 } = Astro.props;
 
@@ -30,18 +28,33 @@ const heights = {
 >
   <!-- Background image with overlay -->
   <div class="absolute inset-0 z-0">
-    <img
-      src={backgroundImage}
-      srcset="/images/hero-bkg-800.jpg 800w, /images/hero-bkg-1280.jpg 1280w, /images/hero-bkg-1920.jpg 1920w"
-      sizes="100vw"
-      alt=""
-      class="w-full h-full object-cover object-center"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      width="1920"
-      height="1080"
-    />
+    <picture>
+      <!-- Mobile portrait: 4:5 crop -->
+      <source
+        media="(max-width: 767px)"
+        srcset="/images/hero-bkg-mobile.jpg"
+        width="800"
+        height="1000"
+      />
+      <!-- Tablet: 16:9 crop -->
+      <source
+        media="(max-width: 1279px)"
+        srcset="/images/hero-bkg-1280.jpg"
+        width="1280"
+        height="720"
+      />
+      <!-- Desktop: 16:9 crop -->
+      <img
+        src="/images/hero-bkg-1920.jpg"
+        alt=""
+        class="w-full h-full object-cover object-center"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        width="1920"
+        height="1080"
+      />
+    </picture>
     <!-- Gradient overlay: dark left for text, transparent right -->
     <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/50 to-transparent" />
     <!-- Bottom fade -->
@@ -103,8 +116,8 @@ const heights = {
       <!-- Trust badges -->
       <div class="flex flex-wrap gap-6 mt-12">
         {[
-          { number: '500+', label: 'Viajeras' },
-          { number: '30+', label: 'Destinos' },
+          { number: '100+', label: 'Viajeras' },
+          { number: '5+', label: 'Destinos' },
           { number: '5★', label: 'Calificación' },
         ].map(({ number, label }) => (
           <div class="flex flex-col">

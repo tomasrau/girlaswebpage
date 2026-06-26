@@ -5,6 +5,7 @@ interface Props {
   duration: string;
   price: string;
   image: string;
+  imagePosition?: string;
   tags?: string[];
   href?: string;
   featured?: boolean;
@@ -16,6 +17,7 @@ const {
   duration,
   price,
   image,
+  imagePosition = 'center',
   tags = [],
   href = '#',
   featured = false,
@@ -42,6 +44,7 @@ const {
       src={image}
       alt={`Experiencia: ${title} en ${destination}`}
       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      style={`object-position: ${imagePosition}`}
       loading="lazy"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -88,9 +91,11 @@ const {
 
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full border-2 border-[var(--color-coral)] text-[var(--color-coral)] text-sm font-semibold hover:bg-[var(--color-coral)] hover:text-white transition-all"
     >
-      Ver detalles
+      Para más info
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
