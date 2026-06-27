@@ -14,7 +14,6 @@ const hasData  = testimonials.length > 0;
 // 4. Agregar PUBLIC_APPS_SCRIPT_URL=<url> en tu .env local
 const APPS_SCRIPT_URL = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
 
-const npsSign = metrics.npsScore >= 0 ? '+' : '';
 ---
 
 <section class="section-padding bg-[var(--color-cream-dark)]" aria-labelledby="testimonials-title">
@@ -61,12 +60,12 @@ const npsSign = metrics.npsScore >= 0 ? '+' : '';
           <p class="text-[var(--color-charcoal-mid)] text-xs leading-snug">Calificación promedio</p>
         </div>
 
-        <!-- NPS -->
+        <!-- Promoter rate -->
         <div class="text-center bg-white rounded-2xl p-5 shadow-[var(--shadow-card)]">
-          <div class={`font-display text-4xl font-bold mb-1 ${metrics.npsScore >= 0 ? 'text-[var(--color-teal)]' : 'text-[var(--color-coral)]'}`}>
-            {npsSign}{metrics.npsScore}
+          <div class="font-display text-4xl font-bold mb-1 text-[var(--color-teal)] tabular-nums">
+            {metrics.promoterPct}%
           </div>
-          <p class="text-[var(--color-charcoal-mid)] text-xs leading-snug mt-3">Net Promoter Score</p>
+          <p class="text-[var(--color-charcoal-mid)] text-xs leading-snug mt-3">La recomiendan</p>
         </div>
 
         <!-- Would return -->

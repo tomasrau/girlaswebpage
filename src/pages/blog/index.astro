@@ -8,7 +8,6 @@ import { posts } from '../../data/posts';
 
 const metrics  = getMetrics(testimonials);
 const hasReviews = testimonials.length > 0;
-const npsSign  = metrics.npsScore >= 0 ? '+' : '';
 const sorted   = [...testimonials].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
@@ -189,10 +188,10 @@ const APPS_SCRIPT_URL = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
                 <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs leading-snug">Calificación</p>
               </div>
               <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
-                <div class={`font-display text-3xl sm:text-4xl font-bold leading-none mb-1 ${metrics.npsScore >= 0 ? 'text-[var(--color-teal)]' : 'text-[var(--color-coral)]'}`}>
-                  {npsSign}{metrics.npsScore}
+                <div class="font-display text-3xl sm:text-4xl font-bold leading-none mb-1 text-[var(--color-teal)] tabular-nums">
+                  {metrics.promoterPct}%
                 </div>
-                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">¿Lo recomendarías?</p>
+                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">La recomiendan</p>
               </div>
               <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
                 <div class="font-display text-2xl sm:text-4xl font-bold text-[var(--color-coral)] leading-none mb-1 tabular-nums">

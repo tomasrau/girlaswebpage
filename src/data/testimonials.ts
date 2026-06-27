@@ -17,7 +17,7 @@ export interface Testimonial {
 
 export interface TestimonialMetrics {
   avgStars: number;
-  npsScore: number;
+  promoterPct: number;
   wouldReturnPct: number;
   total: number;
 }
@@ -86,14 +86,13 @@ export const testimonials: Testimonial[] = [
 ];
 
 export function getMetrics(data: Testimonial[]): TestimonialMetrics {
-  if (!data.length) return { avgStars: 0, npsScore: 0, wouldReturnPct: 0, total: 0 };
-  const avgStars = Math.round((data.reduce((s, t) => s + t.stars, 0) / data.length) * 10) / 10;
-  const promoters  = data.filter(t => t.nps >= 9).length;
-  const detractors = data.filter(t => t.nps <= 6).length;
-  const npsScore   = Math.round(((promoters - detractors) / data.length) * 100);
+  if (!data.length) return { avgStars: 0, promoterPct: 0, wouldReturnPct: 0, total: 0 };
+  const avgStars    = Math.round((data.reduce((s, t) => s + t.stars, 0) / data.length) * 10) / 10;
+  const promoters   = data.filter(t => t.nps >= 9).length;
+  const promoterPct = Math.round((promoters / data.length) * 100);
   const returning      = data.filter(t => t.wouldReturn === 'si').length;
   const wouldReturnPct = Math.round((returning / data.length) * 100);
-  return { avgStars, npsScore, wouldReturnPct, total: data.length };
+  return { avgStars, promoterPct, wouldReturnPct, total: data.length };
 }
 
 export function getFeatured(data: Testimonial[], limit = 4): Testimonial[] {
