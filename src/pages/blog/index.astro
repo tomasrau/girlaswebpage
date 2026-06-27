@@ -192,10 +192,10 @@ const APPS_SCRIPT_URL = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
                 <div class={`font-display text-3xl sm:text-4xl font-bold leading-none mb-1 ${metrics.npsScore >= 0 ? 'text-[var(--color-teal)]' : 'text-[var(--color-coral)]'}`}>
                   {npsSign}{metrics.npsScore}
                 </div>
-                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">NPS Score</p>
+                <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">¿Lo recomendarías?</p>
               </div>
               <div class="text-center bg-white rounded-2xl p-4 sm:p-6 shadow-[var(--shadow-card)]">
-                <div class="font-display text-3xl sm:text-4xl font-bold text-[var(--color-coral)] leading-none mb-1">
+                <div class="font-display text-2xl sm:text-4xl font-bold text-[var(--color-coral)] leading-none mb-1 tabular-nums">
                   {metrics.wouldReturnPct}%
                 </div>
                 <p class="text-[var(--color-charcoal-mid)] text-[0.65rem] sm:text-xs mt-3 leading-snug">Volvería</p>
