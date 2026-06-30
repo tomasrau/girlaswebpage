@@ -116,13 +116,13 @@ export const posts: Post[] = [
 <p>Si vas a un destino con escuela o alquiler de tablas (como Pipa o Itamambuca), no necesitás llevar tabla propia. Podés alquilar ahí según el tipo de ola y tu nivel. Lo que sí conviene tener:</p>
 <ul>
   <li><strong>Rashguard:</strong> protege del sol y del roce con la tabla. Llevá al menos 2.</li>
-  <li><strong>Reef booties</strong> si el fondo es rocoso o de coral.</li>
-  <li><strong>Leash propio</strong> si tenés, aunque en general te lo prestan con la tabla.</li>
-  <li><strong>Wax</strong> del tipo que corresponde a la temperatura del agua (tropical, warm, cool).</li>
+  <li><strong>Reef booties:</strong> imprescindibles si el fondo es rocoso o de coral.</li>
+  <li><strong>Leash propio:</strong> si tenés, aunque en general te lo prestan con la tabla.</li>
+  <li><strong>Wax:</strong> del tipo que corresponde a la temperatura del agua (tropical, warm, cool).</li>
 </ul>
 
 <h2>Ropa y trajes de baño</h2>
-<p>Regla de oro: más trajes de baño de los que creés necesitar. Cuando surf dos veces por día, secás mal o el calor los mantiene húmedos. Lo ideal:</p>
+<p>Regla de oro: más trajes de baño de los que creés necesitar. Cuando surfeás dos veces por día, la humedad no da tregua. Lo ideal:</p>
 <ul>
   <li>3 o 4 trajes de baño (tops y bottoms que combinen entre sí).</li>
   <li>2 o 3 rashguards de colores y mangas distintas.</li>
@@ -134,11 +134,11 @@ export const posts: Post[] = [
 <h2>Protección solar y skincare</h2>
 <p>El combo playa + agua + viento es el peor para la piel. No subestimes esto:</p>
 <ul>
-  <li><strong>Protector solar SPF 50+</strong> resistente al agua y en cantidad generosa. En los destinos de surf lo usás 2-3 veces por día.</li>
-  <li><strong>Protector labial con SPF.</strong></li>
-  <li>Hidratante para el cuerpo y la cara (el sol y la sal resecan mucho).</li>
-  <li>Shampoo para cabello con sal y sol (hay productos específicos).</li>
-  <li>Áloe vera o after-sun para si igual te quemás.</li>
+  <li><strong>Protector solar SPF 50+:</strong> resistente al agua y en cantidad generosa. En los destinos de surf lo usás 2-3 veces por día.</li>
+  <li><strong>Protector labial con SPF:</strong> básico y liviano, entra en cualquier bolsillo.</li>
+  <li><strong>Hidratante facial y corporal:</strong> el sol y la sal resecan mucho.</li>
+  <li><strong>Shampoo:</strong> hay productos específicos para cabello expuesto a sal y sol.</li>
+  <li><strong>Áloe vera o after-sun:</strong> para si igual te quemás.</li>
 </ul>
 
 <h2>Accesorios esenciales</h2>
@@ -153,20 +153,19 @@ export const posts: Post[] = [
 
 <h2>Salud y bienestar</h2>
 <ul>
-  <li>Ibuprofeno o analgésico (los músculos del surf duelen los primeros días).</li>
-  <li>Antihistamínico si sos alérgica a algún insecto o planta.</li>
-  <li>Repelente de mosquitos (básico en Brasil y zonas tropicales).</li>
-  <li>Tiritas y desinfectante para los pequeños raspones.</li>
+  <li><strong>Ibuprofeno o analgésico:</strong> los músculos del surf duelen los primeros días.</li>
+  <li><strong>Antihistamínico:</strong> si sos alérgica a algún insecto o planta.</li>
+  <li><strong>Repelente de mosquitos:</strong> básico en Brasil y zonas tropicales.</li>
+  <li><strong>Tiritas y desinfectante:</strong> para los pequeños raspones.</li>
   <li>Tus medicamentos habituales.</li>
 </ul>
 
 <h2>Documentos y finanzas</h2>
 <ul>
-  <li>Pasaporte o DNI vigente.</li>
-  <li>Fotocopia o foto del documento guardada en el celular y en el mail.</li>
-  <li>Efectivo local + dólares de respaldo + tarjeta de crédito/débito internacional.</li>
-  <li>Seguro de viaje (no lo salteés: un golpe en el agua en el exterior puede ser muy caro).</li>
-  <li>Número de la embajada argentina en el destino.</li>
+  <li><strong>Pasaporte o DNI vigente:</strong> guardá también una fotocopia digital en el celular y en el mail.</li>
+  <li><strong>Efectivo:</strong> moneda local + dólares de respaldo + tarjeta internacional.</li>
+  <li><strong>Seguro de viaje:</strong> no lo salteés. Un golpe en el agua en el exterior puede ser muy caro.</li>
+  <li><strong>Contacto de la embajada:</strong> número y dirección de la embajada argentina en el destino.</li>
 </ul>
 
 <hr />
@@ -213,11 +212,11 @@ export const posts: Post[] = [
 <h2>Cómo editar fotos desde el celular sin que queden artificiales</h2>
 <p>Lightroom Mobile (gratis) es el editor que uso. Mis ajustes base para fotos de naturaleza:</p>
 <ul>
-  <li>Exposición: +0.2 a +0.4 si la foto quedó oscura.</li>
-  <li>Sombras: subir para recuperar detalle en zonas oscuras.</li>
-  <li>Blancos: bajar un poco para evitar cielos quemados.</li>
-  <li>Claridad: +10 a +20 para texturas (agua, rocas, pasto).</li>
-  <li>Tonos de color: en fotos de playa, bajar un poco la saturación del azul y subir la del verde da resultados naturales y tropicales a la vez.</li>
+  <li><strong>Exposición:</strong> +0.2 a +0.4 si la foto quedó oscura.</li>
+  <li><strong>Sombras:</strong> subir para recuperar detalle en zonas oscuras.</li>
+  <li><strong>Blancos:</strong> bajar un poco para evitar cielos quemados.</li>
+  <li><strong>Claridad:</strong> +10 a +20 para texturas (agua, rocas, pasto).</li>
+  <li><strong>Tonos de color:</strong> en fotos de playa, bajá la saturación del azul y subí la del verde para un resultado natural y tropical.</li>
 </ul>
 <p>Clave: que tus fotos se parezcan a lo que realmente viste. La naturaleza ya es hermosa sin filtros exagerados.</p>
 
