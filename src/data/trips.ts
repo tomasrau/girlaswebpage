@@ -44,7 +44,7 @@ export const trips: Trip[] = [
     title: 'Itamambuca',
     destination: 'Ubatuba, São Paulo',
     country: 'Brasil',
-    duration: '6 días',
+    duration: '7 días',
     price: 'USD1.500',
     image: '/images/trips/itamambuca.jpg',
     tags: ['Surf', 'Naturaleza', 'Relax'],
