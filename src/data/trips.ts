@@ -11,6 +11,7 @@ export interface Trip {
   featured?: boolean;
   comingSoon?: boolean;
   soldOut?: boolean;
+  past?: boolean;
   dateStart?: string;
   dateEnd?: string;
   description: string;
@@ -31,9 +32,9 @@ export const trips: Trip[] = [
     tags: ['Playa', 'Surf', 'Drinks'],
     featured: true,
     comingSoon: true,
+    soldOut: true,
     dateStart: '20 Noviembre 2026',
     dateEnd: '27 Noviembre 2026',
-    soldOut: true,
     description: 'Pipa es uno de los destinos más vibrantes del nordeste brasileño. Playas paradisíacas, surf, fiesta y una energía que te va a enamorar.',
     highlights: ['Praia do Amor', 'Barrancas de Tibau do Sul', 'Vida nocturna', 'Surf y kitesurf'],
     includes: ['Por confirmar'],
@@ -63,7 +64,7 @@ export const trips: Trip[] = [
     destination: 'Marruecos',
     country: 'Marruecos',
     duration: 'Por confirmar',
-    price: 'USD1.650',
+    price: 'Próximamente',
     image: '/images/trips/marruecos.jpg',
     imagePosition: 'center',
     tags: ['Surf', 'Aventura', 'África'],
@@ -91,6 +92,23 @@ export const trips: Trip[] = [
     includes: ['Por confirmar'],
     category: 'aventura',
   },
+  {
+    slug: 'buzios-brasil',
+    title: 'Búzios',
+    destination: 'Búzios, Rio de Janeiro',
+    country: 'Brasil',
+    duration: '7 días',
+    price: '',
+    image: '/images/trips/buzios.jpg',
+    imagePosition: 'center',
+    tags: ['Playa', 'Surf', 'Brasil'],
+    featured: false,
+    past: true,
+    description: 'Búzios fue nuestra primera experiencia grupal. Olas, sol, nuevas amigas y la energía que define lo que es viajar con Girlas.',
+    highlights: ['Praia de Geribá', 'Surf grupal', 'Rúa das Pedras', 'Atardecer en el muelle'],
+    includes: ['Por confirmar'],
+    category: 'internacional',
+  },
 ];
 
 // Destinos ya realizados — se muestran en el formulario de reseñas.
@@ -99,6 +117,6 @@ export const pastDestinations: string[] = [
   'Buzios, Brasil',
 ];
 
-export const getFeaturedTrips = () => trips.filter((t) => t.featured);
+export const getFeaturedTrips = () => trips.filter((t) => t.featured && !t.past);
 export const getTripBySlug = (slug: string) => trips.find((t) => t.slug === slug);
 export const getTripsByCategory = (category: Trip['category']) => trips.filter((t) => t.category === category);

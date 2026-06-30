@@ -11,6 +11,7 @@ interface Props {
   featured?: boolean;
   soldOut?: boolean;
   comingSoon?: boolean;
+  past?: boolean;
   dateStart?: string;
   dateEnd?: string;
 }
@@ -27,28 +28,41 @@ const {
   featured = false,
   soldOut = false,
   comingSoon = false,
+  past = false,
   dateStart,
   dateEnd,
 } = Astro.props;
+
+const WA_NUMBER = '5492944675892';
+const waNextTrip = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola! Quiero sumarme al próximo viaje a ' + title)}`;
 
 const dateLabel = dateStart
   ? (dateEnd ? `${dateStart} – ${dateEnd}` : dateStart)
   : null;
 const showDateBadge = !!dateLabel;
-const showSoonBadge = !soldOut && !dateLabel && comingSoon;
+const showSoonBadge = !soldOut && !past && !dateLabel && comingSoon;
 ---
 
 <article
   class:list={[
     'group relative rounded-[var(--radius-card)] overflow-hidden bg-white shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-1',
-    featured && !soldOut ? 'ring-2 ring-[var(--color-coral)]' : '',
+    featured && !soldOut && !past ? 'ring-2 ring-[var(--color-coral)]' : '',
     soldOut ? 'ring-2 ring-[var(--color-charcoal)]/30' : '',
+    past ? 'ring-1 ring-[var(--color-charcoal)]/15' : '',
   ]}
 >
-  {featured && !soldOut && (
+  {featured && !soldOut && !past && (
     <div class="absolute top-4 left-4 z-10">
       <span class="px-3 py-1 rounded-full bg-[var(--color-coral)] text-white text-xs font-semibold tracking-wide">
         ✦ Destacado
+      </span>
+    </div>
+  )}
+
+  {past && (
+    <div class="absolute top-4 left-4 z-10">
+      <span class="px-3 py-1 rounded-full bg-[var(--color-charcoal)]/75 backdrop-blur-sm text-white text-xs font-semibold tracking-wide">
+        ✓ Vivida
       </span>
     </div>
   )}
@@ -62,11 +76,16 @@ const showSoonBadge = !soldOut && !dateLabel && comingSoon;
         'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105',
         soldOut ? 'brightness-[0.55] saturate-[0.4]' : '',
       ]}
-      style={`object-position: ${imagePosition}`}
+      style={`object-position: ${imagePosition}${past ? '; filter: grayscale(22%) brightness(0.92)' : ''}`}
       loading="lazy"
     />
-    {!soldOut && (
+
+    {!soldOut && !past && (
       <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    )}
+
+    {past && (
+      <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-60" />
     )}
 
     {showDateBadge && (
@@ -93,7 +112,6 @@ const showSoonBadge = !soldOut && !dateLabel && comingSoon;
 
     {soldOut && (
       <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 select-none">
-        <!-- Diagonal ribbon tape effect -->
         <div class="relative">
           <div class="sold-out-stamp">
             <span class="sold-out-line1">SOLD</span>
@@ -106,18 +124,25 @@ const showSoonBadge = !soldOut && !dateLabel && comingSoon;
 
   <!-- Content -->
   <div class="p-5">
-    <!-- Tags -->
     {tags.length > 0 && (
       <div class="flex flex-wrap gap-2 mb-3">
         {tags.map((tag) => (
-          <span class="px-2.5 py-0.5 rounded-full bg-[var(--color-cream-dark)] text-[var(--color-charcoal-mid)] text-xs font-medium">
+          <span class:list={[
+            'px-2.5 py-0.5 rounded-full text-xs font-medium',
+            past
+              ? 'bg-[var(--color-charcoal)]/8 text-[var(--color-charcoal-mid)]/70'
+              : 'bg-[var(--color-cream-dark)] text-[var(--color-charcoal-mid)]',
+          ]}>
             {tag}
           </span>
         ))}
       </div>
     )}
 
-    <h3 class="font-display text-xl font-semibold text-[var(--color-charcoal)] mb-1 leading-snug">
+    <h3 class:list={[
+      'font-display text-xl font-semibold mb-1 leading-snug',
+      past ? 'text-[var(--color-charcoal)]/70' : 'text-[var(--color-charcoal)]',
+    ]}>
       {title}
     </h3>
 
@@ -138,15 +163,33 @@ const showSoonBadge = !soldOut && !dateLabel && comingSoon;
         </span>
       </div>
       <div class="text-right">
-        <span class="font-display text-xl font-bold text-[var(--color-coral)]">{price}</span>
-        <span class="text-xs text-[var(--color-charcoal-mid)] block">por persona</span>
+        {past ? (
+          <span class="text-xs text-[var(--color-charcoal-mid)]/60 font-medium tracking-wide uppercase">Experiencia realizada</span>
+        ) : (
+          <>
+            <span class="font-display text-xl font-bold text-[var(--color-coral)]">{price}</span>
+            <span class="text-xs text-[var(--color-charcoal-mid)] block">por persona</span>
+          </>
+        )}
       </div>
     </div>
 
-    {soldOut ? (
+    {soldOut && !past ? (
       <div class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-[var(--color-charcoal)]/8 border-2 border-[var(--color-charcoal)]/20 text-[var(--color-charcoal)]/40 text-sm font-semibold cursor-not-allowed">
         Agotado
       </div>
+    ) : past ? (
+      <a
+        href={waNextTrip}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-full border-2 border-[var(--color-charcoal)]/25 text-[var(--color-charcoal)]/60 text-sm font-semibold hover:border-[var(--color-coral)] hover:text-[var(--color-coral)] transition-all"
+      >
+        Sumáte al próximo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
     ) : (
       <a
         href={href}
@@ -179,15 +222,7 @@ const showSoonBadge = !soldOut && !dateLabel && comingSoon;
     gap: 0;
     line-height: 1;
   }
-  .sold-out-line1 {
-    font-family: var(--font-display, 'Ojuju', sans-serif);
-    font-size: 2.1rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    color: rgba(255,255,255,0.92);
-    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-    display: block;
-  }
+  .sold-out-line1,
   .sold-out-line2 {
     font-family: var(--font-display, 'Ojuju', sans-serif);
     font-size: 2.1rem;
