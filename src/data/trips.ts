@@ -11,6 +11,8 @@ export interface Trip {
   featured?: boolean;
   comingSoon?: boolean;
   soldOut?: boolean;
+  dateStart?: string;
+  dateEnd?: string;
   description: string;
   highlights: string[];
   includes: string[];
@@ -56,14 +58,15 @@ export const trips: Trip[] = [
     title: 'Marruecos',
     destination: 'Marruecos',
     country: 'Marruecos',
-    duration: '10 días',
-    price: 'USD1.650',
+    duration: 'Por confirmar',
+    price: 'Próximamente',
     image: '/images/trips/marruecos.jpg',
     imagePosition: 'center',
     tags: ['Surf', 'Aventura', 'África'],
     featured: true,
     comingSoon: true,
-    description: 'Un surf trip único al corazón de África. Olas perfectas, paisajes increíbles, cultura vibrante y una experiencia que no vas a olvidar. Abril 2027.',
+    dateStart: 'Abr 2027',
+    description: 'Un surf trip único al corazón de África. Olas perfectas, paisajes increíbles, cultura vibrante y una experiencia que no vas a olvidar.',
     highlights: ['Por confirmar'],
     includes: ['Por confirmar'],
     category: 'internacional',

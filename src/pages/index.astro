@@ -63,6 +63,9 @@ const featuredTrips = getFeaturedTrips();
             href={`https://wa.me/5492944675892?text=Hola!%20Quiero%20más%20info%20sobre%20el%20viaje%20a%20${encodeURIComponent(trip.title)}`}
             featured={trip.featured}
             soldOut={trip.soldOut}
+            comingSoon={trip.comingSoon}
+            dateStart={trip.dateStart}
+            dateEnd={trip.dateEnd}
           />
         ))}
       </div>
