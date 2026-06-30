@@ -31,6 +31,8 @@ export const trips: Trip[] = [
     tags: ['Playa', 'Surf', 'Drinks'],
     featured: true,
     comingSoon: true,
+    dateStart: '20 Noviembre 2026',
+    dateEnd: '27 Noviembre 2026',
     soldOut: true,
     description: 'Pipa es uno de los destinos más vibrantes del nordeste brasileño. Playas paradisíacas, surf, fiesta y una energía que te va a enamorar.',
     highlights: ['Praia do Amor', 'Barrancas de Tibau do Sul', 'Vida nocturna', 'Surf y kitesurf'],
