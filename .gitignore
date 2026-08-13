@@ -27,3 +27,6 @@ Thumbs.db
 # Imágenes originales de trabajo sin optimizar
 public/images/trips/*.png
 public/images/trips/*.jpeg
+
+# Google Apps Script source (se versiona localmente, no se expone en el repo público)
+scripts/*.gs
