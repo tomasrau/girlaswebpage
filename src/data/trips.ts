@@ -101,6 +101,7 @@ export const trips: Trip[] = [
     duration: 'Experiencia en el día',
     price: 'AR$160.000',
     image: '/images/trips/wake-sunset.jpg',
+    imagePosition: 'center 20%',
     tags: ['Wakeboard', 'Lancha', 'Naturaleza'],
     featured: true,
     comingSoon: true,
